@@ -1,0 +1,72 @@
+﻿<Window x:Class="Matrix_Calculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Matrix_Calculator"
+        mc:Ignorable="d"
+        Title="Matrix Calculator" Height="450" Width="800"
+        xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary">
+    <Grid>
+        <TabControl TabStripPlacement="Top">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Deklaracja" Foreground="Green" Padding="5,0"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <WrapPanel Grid.Row="0" Grid.Column="0" Margin="5">
+                        <Label Content="Podaj rozmiar macierzy:" Margin="5"/>
+                        <TextBox x:Name="tbCols" Padding="5" MaxWidth="100" Margin="5" Text="{Binding MatrixRows}"/>
+                        <Label Content="X" Margin="5"/>
+                        <TextBox x:Name="tbRows" Padding="5" MaxWidth="100" Margin="5" Text="{Binding MatrixCols}"/>
+                        <Button x:Name="btnAddMatrix" Content="Dodaj macierz" Margin="30,5" Click="btnAddMatrix_Click"/>
+                    </WrapPanel>
+                    <DockPanel LastChildFill="True" Grid.Row="1" Grid.Column="0" Margin="5">
+                        <Grid x:Name="gridList" Margin="5" Width="250">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Wyszukaj" Grid.Row="0" Grid.Column="0" Margin="5"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="Matrix" VerticalAlignment="Center"/>
+                            <ListView x:Name="lvMatrix" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn  DisplayMemberBinding="{Binding MatrixName}"/>
+                                        <!--DisplayMemberBinding-->
+                                    </GridView>
+                                </ListView.View>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                            </ListView>
+                        </Grid>
+                        <DataGrid x:Name="dgMatrix" Margin="5"/>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Mnożenie" Foreground="Green" Padding="5,0"/>
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
