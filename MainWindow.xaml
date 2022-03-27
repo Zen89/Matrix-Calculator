@@ -43,6 +43,7 @@
                         <Label Content="X" Margin="5"/>
                         <TextBox x:Name="tbCols" Padding="5" MaxWidth="100" Margin="5" Text="{Binding MatrixCols}"/>
                         <Button x:Name="btnAddMatrix" Content="Dodaj macierz" Margin="30,5" Click="btnAddMatrix_Click"/>
+                        <Button x:Name="btnSaveChanges" Content="Zapisz zmiany" Margin="30,5" Click="btnSaveChanges_Click"/>
                     </WrapPanel>
                     <DockPanel LastChildFill="True" Grid.Row="1" Grid.Column="0" Margin="5">
                         <Grid x:Name="gridList" Margin="5" Width="250">

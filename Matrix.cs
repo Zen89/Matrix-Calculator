@@ -14,7 +14,7 @@ namespace Matrix_Calculator
         public int MatrixRows { get; set; }
         public int MatrixCols { get; set; }
 
-        public Matrix(string name, int rows, int cols)
+        public Matrix(int rows, int cols, string name = "Matrix")
         {
             MatrixName = name;
             MatrixBody = new double[rows, cols];
@@ -23,8 +23,7 @@ namespace Matrix_Calculator
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    MatrixBody[i, j] = i*j;
-                    
+                    MatrixBody[i, j] = 1;
                 }
             }
             MatrixRows = rows;
@@ -51,5 +50,6 @@ namespace Matrix_Calculator
             }
             return sb.ToString();
         }
+
     }
 }

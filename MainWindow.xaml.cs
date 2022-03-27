@@ -28,7 +28,7 @@ namespace Matrix_Calculator
         internal ObservableCollection<Matrix> MatrixList = new ObservableCollection<Matrix>();
         
 
-        Matrix testowy = new Matrix("testowy", 2, 3);
+        Matrix testowy = new Matrix(2, 3, "testowy");
         public MainWindow()
         {
             InitializeComponent();
@@ -39,7 +39,7 @@ namespace Matrix_Calculator
 
         private void PrepareBinding()
         {
-            Matrix newMatrix = new Matrix($"Matrix 0", 3, 2);
+            Matrix newMatrix = new Matrix(3, 2, $"Matrix 0");
             MatrixList.Add(newMatrix);
             MatrixList.Add(testowy);
             
@@ -55,9 +55,8 @@ namespace Matrix_Calculator
                         
             int rows = int.Parse(tbRows.Text);
             int cols = int.Parse(tbCols.Text);
-            Matrix newMatrix = new Matrix($"Matrix {count}", rows, cols);
+            Matrix newMatrix = new Matrix(rows, cols, $"Matrix {count}");
             MatrixList.Add(newMatrix);
-            MessageBox.Show(newMatrix.ToString());
         }
 
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -65,21 +64,26 @@ namespace Matrix_Calculator
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                
                 for (int k = 0; k < MatrixList.Count; k++)
                 {
-                    
                     if (item.Content.ToString().Contains(MatrixList[k].MatrixName))
                     {
                         int rowsNum = MatrixList[k].MatrixRows;
                         int columnsNum = MatrixList[k].MatrixCols;
-                        Matrix matrix = new Matrix("test", rowsNum, columnsNum);
+                        Matrix matrix = MatrixList[k];
                         DataTable dataTable = matrix.ToDataTable();
                         gridMatrix.DataContext = dataTable.DefaultView;
                     }
                 }
-                //MessageBox.Show(temp.ToString());
             }
+        }
+
+        private void btnSaveChanges_Click(object sender, RoutedEventArgs e)
+        {
+            var index = lvMatrix.SelectedIndex;
+            var name = $"{ MatrixList[index].MatrixName}";
+            Matrix matrix = new Matrix((MatrixList[index].MatrixRows), (MatrixList[index].MatrixCols), name);
+            MatrixList[index] = ((DataView)gridMatrix.DataContext).ToTable().ToMatrix(matrix);
         }
     }
 }

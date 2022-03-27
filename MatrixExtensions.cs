@@ -20,9 +20,21 @@ namespace Matrix_Calculator
 
             for (int i = 0; i < matrix.MatrixRows; i++)
                 for (int j = 0; j < matrix.MatrixCols; j++)
-                    table.Rows[i][j] = matrix[i, j];
+                    table.Rows[i][j] = matrix.MatrixBody[i, j];
 
             return table;
+        }
+
+        public static Matrix ToMatrix(this DataTable table, Matrix matrix)
+        {
+            Matrix result = new Matrix(table.Rows.Count, table.Columns.Count, matrix.MatrixName);
+
+            for (int i = 0; i < table.Rows.Count; i++)
+                for (int j = 0; j < table.Columns.Count; j++)
+                {
+                    result.MatrixBody[i, j] = Convert.ToDouble(table.Rows[i][j]);
+                }
+            return result;
         }
     }
 }
