@@ -14,37 +14,34 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Controls.Primitives;
+using System.Data;
 
 namespace Matrix_Calculator
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
     public partial class MainWindow : Window
     {
         internal ObservableCollection<Matrix> MatrixList = new ObservableCollection<Matrix>();
-        internal Collection<Matrix> MatrixCollection = new Collection<Matrix>;
-        Matrix testowy = new Matrix("testowy", 4, 4);
+        
+
+        Matrix testowy = new Matrix("testowy", 2, 3);
         public MainWindow()
         {
             InitializeComponent();
             PrepareBinding();
 
             lvMatrix.ItemsSource = MatrixList;
-            double[,] tablica = new double[testowy.MatrixRows,testowy.MatrixCols];
-            Array.Copy(testowy.MatrixBody, tablica, testowy.MatrixBody.Length);
-
-
         }
 
         private void PrepareBinding()
         {
-            //MatrixList = new ObservableCollection<Matrix>();
-            Matrix newMatrix = new Matrix($"Matrix 0", 4, 4);
+            Matrix newMatrix = new Matrix($"Matrix 0", 3, 2);
             MatrixList.Add(newMatrix);
             MatrixList.Add(testowy);
-            double[,] tablica = new double[testowy.MatrixRows, testowy.MatrixCols];
-            Array.Copy(testowy.MatrixBody, tablica, testowy.MatrixBody.Length);
             
         }
 
@@ -60,7 +57,7 @@ namespace Matrix_Calculator
             int cols = int.Parse(tbCols.Text);
             Matrix newMatrix = new Matrix($"Matrix {count}", rows, cols);
             MatrixList.Add(newMatrix);
-            //MessageBox.Show(newMatrix.ToString());
+            MessageBox.Show(newMatrix.ToString());
         }
 
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -68,8 +65,20 @@ namespace Matrix_Calculator
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                var temp = item.Content.ToString();
-                MessageBox.Show(MatrixList.);
+                
+                for (int k = 0; k < MatrixList.Count; k++)
+                {
+                    
+                    if (item.Content.ToString().Contains(MatrixList[k].MatrixName))
+                    {
+                        int rowsNum = MatrixList[k].MatrixRows;
+                        int columnsNum = MatrixList[k].MatrixCols;
+                        Matrix matrix = new Matrix("test", rowsNum, columnsNum);
+                        DataTable dataTable = matrix.ToDataTable();
+                        gridMatrix.DataContext = dataTable.DefaultView;
+                    }
+                }
+                //MessageBox.Show(temp.ToString());
             }
         }
     }
