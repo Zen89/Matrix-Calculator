@@ -59,7 +59,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Label Content="Wyszukaj" Grid.Row="0" Grid.Column="0" Margin="5" MinWidth="120"/>
-                            <Button x:Name="btnLoadMatrixes" Grid.Row="1" Grid.Column="0" Content="Wczytaj z pliku" Margin="5" />
+                            <Button x:Name="btnLoadMatrixes" Grid.Row="1" Grid.Column="0" Content="Wczytaj z pliku" Margin="5" Click="btnLoadMatrixes_Click" />
                             <Button x:Name="btnSaveMatrixes" Grid.Row="1" Grid.Column="1" Content="Zapisz do pliku" Margin="5" Click="btnSaveMatrixes_Click" />
                             <TextBox x:Name="txtFilter" Grid.Column="1" Margin="5" Text="" VerticalAlignment="Center" Height="18" TextChanged="txtFilter_TextChanged"/>
                             <ListView x:Name="lvMatrix" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" >

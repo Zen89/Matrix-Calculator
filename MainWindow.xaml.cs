@@ -109,7 +109,7 @@ namespace Matrix_Calculator
 
         private void btnSaveMatrixes_Click(object sender, RoutedEventArgs e)
         {
-            Matrix rec = new Matrix(5, 4);
+            Matrix rec = new Matrix(5, 4, "macierz44");
             List<double> tab = new List<double>();
             //int counter = 0;
             for (int i = 0; i < rec.MatrixRows; i++)
@@ -122,10 +122,10 @@ namespace Matrix_Calculator
             var records = new List<TesteR>
             {
                 new TesteR{ Name = rec.MatrixName, Row = rec.MatrixRows, Col = rec.MatrixCols },
-                new TesteR{ Name = rec.MatrixName, Row = rec.MatrixRows, Col = rec.MatrixCols },
+                //new TesteR{ Name = rec.MatrixName, Row = rec.MatrixRows, Col = rec.MatrixCols },
             };
 
-            using (var writer = new StreamWriter("file.csv"))
+            using (var writer = new StreamWriter("filek.csv"))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
                 csv.WriteHeader<TesteR>();
@@ -133,12 +133,52 @@ namespace Matrix_Calculator
                 foreach (var record in records)
                 {
                     csv.WriteRecord(record);
+                    csv.NextRecord();
                     foreach (var recordd in tab)
                     {
                         csv.WriteRecord(recordd);
+                        csv.NextRecord();
                     }
-                    csv.NextRecord();
+                    //csv.NextRecord();
                 }
+            }
+        }
+
+        private void btnLoadMatrixes_Click(object sender, RoutedEventArgs e)
+        {
+            List<double> tab = new List<double>();
+            TesteR record = new TesteR();
+
+            using (var reader = new StreamReader("filek.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Read();
+                for (int i = 0; i < 3; i++)
+                {
+                    record = csv.GetRecord<TesteR>();
+                }
+
+                int counter = Convert.ToInt32(record.Row) * Convert.ToInt32(record.Col);
+                while ( counter > 0 && csv.Read())
+                {
+                    tab.Add(csv.GetRecord<double>());
+                    counter--;
+                }
+                Console.WriteLine(record.Name + " " + record.Row + " " + record.Col);
+                foreach (double rec in tab)
+                {
+                    Console.WriteLine(rec);
+                }
+
+                Matrix matrix = new Matrix(record.Row, record.Col, record.Name);
+                for (int i = 0; i < record.Row; i++)
+                {
+                    for (int j = 0; j < record.Col; j++)
+                    {
+                        matrix.MatrixBody[i, j] = tab[counter++];
+                    }
+                }
+                MatrixList.Add(matrix);
             }
         }
     }
@@ -148,6 +188,6 @@ namespace Matrix_Calculator
         public string Name { get; set; }
         public int Row { get; set; }
         public int Col { get; set; }
-        public int Body { get; set; }
+        //public int Body { get; set; }
     }
 }
