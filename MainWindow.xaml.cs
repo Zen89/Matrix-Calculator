@@ -56,7 +56,7 @@ namespace Matrix_Calculator
                 count = MatrixList.Count();
             }
 
-            if (tbRows.Text != null && tbCols != null)
+            if (tbRows.Text != null && tbCols.Text != null)
             {
                 int rows = int.Parse(tbRows.Text);
                 int cols = int.Parse(tbCols.Text);
@@ -88,6 +88,7 @@ namespace Matrix_Calculator
             var name = $"{MatrixList[index].MatrixName}";
             Matrix matrix = new Matrix((MatrixList[index].MatrixRows), (MatrixList[index].MatrixCols), name);
             MatrixList[index] = ((DataView)gridMatrix.DataContext).ToTable().ToMatrix(matrix);
+            lvMatrix.SelectedIndex = index;
         }
 
         private bool UserFilter(object item)
