@@ -68,8 +68,6 @@ namespace Matrix_Calculator
                 {
                     if (item.Content.ToString().Contains(MatrixList[k].MatrixName))
                     {
-                        int rowsNum = MatrixList[k].MatrixRows;
-                        int columnsNum = MatrixList[k].MatrixCols;
                         Matrix matrix = MatrixList[k];
                         DataTable dataTable = matrix.ToDataTable();
                         gridMatrix.DataContext = dataTable.DefaultView;

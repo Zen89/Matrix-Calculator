@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Matrix_Calculator"
         mc:Ignorable="d"
-        Title="Matrix Calculator" Height="450" Width="800">
+        Title="Matrix Calculator" Height="550" Width="1100">
     <Window.Resources>
         <Style TargetType="DataGrid">
-            <Setter Property="Width" Value="500" />
-            <Setter Property="Height" Value="350" />
+            <Setter Property="MinHeight" Value="20" />
+            <Setter Property="MinWidth" Value="30" />
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="CanUserAddRows" Value="False" />
             <Setter Property="HeadersVisibility" Value="None" />
             <Setter Property="RowHeight" Value="20" />
-            <Setter Property="MinColumnWidth" Value="20" />
-            <Setter Property="ColumnWidth" Value="*" />
+            <Setter Property="MinColumnWidth" Value="30" />
+            <Setter Property="ColumnWidth" Value="30" />
             <Setter Property="ItemsSource" Value="{Binding}" />
             <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
         </Style>
@@ -71,7 +71,7 @@
                                 </ListView.ItemContainerStyle>
                             </ListView>
                         </Grid>
-                        <DataGrid x:Name="gridMatrix" Margin="5" ItemsSource="{Binding}"/>
+                        <DataGrid x:Name="gridMatrix" Margin="5,5,5,0" ItemsSource="{Binding}"/>
                     </DockPanel>
                 </Grid>
             </TabItem>
