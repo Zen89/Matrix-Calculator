@@ -16,6 +16,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Controls.Primitives;
 using System.Data;
+using System.IO;
+using CsvHelper;
+using System.Globalization;
 
 namespace Matrix_Calculator
 {
@@ -103,5 +106,48 @@ namespace Matrix_Calculator
         {
             CollectionViewSource.GetDefaultView(lvMatrix.ItemsSource).Refresh();
         }
+
+        private void btnSaveMatrixes_Click(object sender, RoutedEventArgs e)
+        {
+            Matrix rec = new Matrix(5, 4);
+            List<double> tab = new List<double>();
+            //int counter = 0;
+            for (int i = 0; i < rec.MatrixRows; i++)
+            {
+                for (int j = 0; j < rec.MatrixCols; j++)
+                {
+                    tab.Add(rec.MatrixBody[i, j]);
+                }
+            }
+            var records = new List<TesteR>
+            {
+                new TesteR{ Name = rec.MatrixName, Row = rec.MatrixRows, Col = rec.MatrixCols },
+                new TesteR{ Name = rec.MatrixName, Row = rec.MatrixRows, Col = rec.MatrixCols },
+            };
+
+            using (var writer = new StreamWriter("file.csv"))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteHeader<TesteR>();
+                csv.NextRecord();
+                foreach (var record in records)
+                {
+                    csv.WriteRecord(record);
+                    foreach (var recordd in tab)
+                    {
+                        csv.WriteRecord(recordd);
+                    }
+                    csv.NextRecord();
+                }
+            }
+        }
+    }
+
+    public class TesteR
+    {
+        public string Name { get; set; }
+        public int Row { get; set; }
+        public int Col { get; set; }
+        public int Body { get; set; }
     }
 }

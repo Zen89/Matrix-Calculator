@@ -23,7 +23,7 @@ namespace Matrix_Calculator
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    MatrixBody[i, j] = 1;
+                    MatrixBody[i, j] = i+j;
                 }
             }
             MatrixRows = rows;
