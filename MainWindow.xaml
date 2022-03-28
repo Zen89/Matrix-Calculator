@@ -19,6 +19,8 @@
             <Setter Property="ColumnWidth" Value="30" />
             <Setter Property="ItemsSource" Value="{Binding}" />
             <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+            <Setter Property="SelectionMode" Value="Single" />
+            <Setter Property="SelectionUnit" Value="Cell" />
         </Style>
     </Window.Resources>
     <Grid>
@@ -56,7 +58,7 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Label Content="Wyszukaj" Grid.Row="0" Grid.Column="0" Margin="5,5,5,5"/>
-                            <TextBox Grid.Column="1" Margin="5,0,5,0" Text="Matrix" VerticalAlignment="Center" Height="18"/>
+                            <TextBox x:Name="txtFilter" Grid.Column="1" Margin="5,0,5,0" Text="" VerticalAlignment="Center" Height="18" TextChanged="txtFilter_TextChanged"/>
                             <ListView x:Name="lvMatrix" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,5,5,5">
                                 <ListView.View>
                                     <GridView>

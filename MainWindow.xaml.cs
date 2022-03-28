@@ -29,12 +29,15 @@ namespace Matrix_Calculator
         
 
         Matrix testowy = new Matrix(2, 3, "testowy");
+        List<string> Namelist = new List<string>();
         public MainWindow()
         {
             InitializeComponent();
             PrepareBinding();
 
             lvMatrix.ItemsSource = MatrixList;
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvMatrix.ItemsSource);
+            view.Filter = UserFilter;
         }
 
         private void PrepareBinding()
@@ -52,11 +55,14 @@ namespace Matrix_Calculator
             {
                 count = MatrixList.Count();
             }
-                        
-            int rows = int.Parse(tbRows.Text);
-            int cols = int.Parse(tbCols.Text);
-            Matrix newMatrix = new Matrix(rows, cols, $"Matrix {count}");
-            MatrixList.Add(newMatrix);
+
+            if (tbRows.Text != null && tbCols != null)
+            {
+                int rows = int.Parse(tbRows.Text);
+                int cols = int.Parse(tbCols.Text);
+                Matrix newMatrix = new Matrix(rows, cols, $"Matrix {count}");
+                MatrixList.Add(newMatrix);
+            }
         }
 
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -79,9 +85,22 @@ namespace Matrix_Calculator
         private void btnSaveChanges_Click(object sender, RoutedEventArgs e)
         {
             var index = lvMatrix.SelectedIndex;
-            var name = $"{ MatrixList[index].MatrixName}";
+            var name = $"{MatrixList[index].MatrixName}";
             Matrix matrix = new Matrix((MatrixList[index].MatrixRows), (MatrixList[index].MatrixCols), name);
             MatrixList[index] = ((DataView)gridMatrix.DataContext).ToTable().ToMatrix(matrix);
+        }
+
+        private bool UserFilter(object item)
+        {
+            if (String.IsNullOrEmpty(txtFilter.Text))
+                return true;
+            else
+                return ((item as Matrix).MatrixName.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+        }
+
+        private void txtFilter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(lvMatrix.ItemsSource).Refresh();
         }
     }
 }
