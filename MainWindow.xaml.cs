@@ -64,7 +64,8 @@ namespace Matrix_Calculator
             {
                 int rows = int.Parse(tbRows.Text);
                 int cols = int.Parse(tbCols.Text);
-                Matrix newMatrix = new Matrix(rows, cols, $"Matrix {count}");
+                string name = tbName.Text;
+                Matrix newMatrix = new Matrix(rows, cols, name);
                 MatrixList.Add(newMatrix);
             }
         }

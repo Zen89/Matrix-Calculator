@@ -40,7 +40,9 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <WrapPanel Grid.Row="0" Grid.Column="0" Margin="5">
-                        <Label Content="Podaj rozmiar macierzy:" Margin="5"/>
+                        <Label Content="Podaj nazwę i rozmiar macierzy [wiersz X kolumna]:      nazwa:" Margin="5,5,0,5"/>
+                        <TextBox x:Name="tbName" Padding="5" MinWidth="100" Margin="5" Text="{Binding MatrixName}"/>
+                        <Label Content="rozmiar:" Margin="5,5,0,5"/>
                         <TextBox x:Name="tbRows" Padding="5" MaxWidth="100" Margin="5" Text="{Binding MatrixRows}"/>
                         <Label Content="X" Margin="5"/>
                         <TextBox x:Name="tbCols" Padding="5" MaxWidth="100" Margin="5" Text="{Binding MatrixCols}"/>
