@@ -121,28 +121,40 @@ namespace Matrix_Calculator
 
         private void SaveMatrixesToFile()
         {
-            using (var writer = new StreamWriter("tst.csv"))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+            dialog.FilterIndex = 2;
+            dialog.RestoreDirectory = true;
+
+            if (dialog.ShowDialog() == true)
             {
-                csv.WriteHeader<TesteR>();
-                csv.NextRecord();
+                string path = (new Uri(dialog.FileName)).ToString();
+                path.Replace('\\', '/');
+                path = path.Substring(8);
 
-                foreach (var matrix in MatrixList)
+                using (var writer = new StreamWriter($"{path}"))
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                 {
-                    var record = new TesteR { Row = matrix.MatrixRows, Col = matrix.MatrixCols, Name = matrix.MatrixName };
-                    List<double> tab = new List<double>();
-
-                    for (int i = 0; i < matrix.MatrixRows; i++)
-                    {
-                        for (int j = 0; j < matrix.MatrixCols; j++)
-                        {
-                            tab.Add(matrix.MatrixBody[i, j]);
-                        }
-                    }
-
-                    csv.WriteRecord(record);
+                    csv.WriteHeader<TesteR>();
                     csv.NextRecord();
-                    csv.WriteRecords(tab);
+
+                    foreach (var matrix in MatrixList)
+                    {
+                        var record = new TesteR { Row = matrix.MatrixRows, Col = matrix.MatrixCols, Name = matrix.MatrixName };
+                        List<double> tab = new List<double>();
+
+                        for (int i = 0; i < matrix.MatrixRows; i++)
+                        {
+                            for (int j = 0; j < matrix.MatrixCols; j++)
+                            {
+                                tab.Add(matrix.MatrixBody[i, j]);
+                            }
+                        }
+
+                        csv.WriteRecord(record);
+                        csv.NextRecord();
+                        csv.WriteRecords(tab);
+                    }
                 }
             }
         }
