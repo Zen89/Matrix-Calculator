@@ -96,6 +96,17 @@ namespace Matrix_Calculator
             lvMatrix.SelectedIndex = index;
         }
 
+        private void btnDeleteMatrix_Click(object sender, RoutedEventArgs e)
+        {
+            var index = lvMatrix.SelectedIndex;
+
+            if (lvMatrix != null)
+            {
+                MessageBoxResult odpowiedz = MessageBox.Show("Czy skasować macierz: " + MatrixList[index].ToString() + "?", "Pytanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (odpowiedz == MessageBoxResult.Yes) MatrixList.RemoveAt(index);
+            }
+        }
+
         private bool UserFilter(object item)
         {
             if (String.IsNullOrEmpty(txtFilter.Text))
