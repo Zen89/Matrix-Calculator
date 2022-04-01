@@ -20,6 +20,7 @@ using System.IO;
 using CsvHelper;
 using System.Globalization;
 using Microsoft.Win32;
+using System.Text.RegularExpressions;
 
 namespace Matrix_Calculator
 {
@@ -60,7 +61,7 @@ namespace Matrix_Calculator
                 count = MatrixList.Count();
             }
 
-            if (tbRows.Text != null && tbCols.Text != null)
+            if (tbRows.Text.Length > 0 && int.Parse(tbRows.Text) > 0 && tbCols.Text.Length > 0 && int.Parse(tbCols.Text) > 0 && tbName.Text.Length > 0)
             {
                 int rows = int.Parse(tbRows.Text);
                 int cols = int.Parse(tbCols.Text);
@@ -90,17 +91,21 @@ namespace Matrix_Calculator
         private void btnSaveChanges_Click(object sender, RoutedEventArgs e)
         {
             var index = lvMatrix.SelectedIndex;
-            var name = $"{MatrixList[index].MatrixName}";
-            Matrix matrix = new Matrix((MatrixList[index].MatrixRows), (MatrixList[index].MatrixCols), name);
-            MatrixList[index] = ((DataView)gridMatrix.DataContext).ToTable().ToMatrix(matrix);
-            lvMatrix.SelectedIndex = index;
+
+            if (index != -1)
+            {
+                var name = $"{MatrixList[index].MatrixName}";
+                Matrix matrix = new Matrix((MatrixList[index].MatrixRows), (MatrixList[index].MatrixCols), name);
+                MatrixList[index] = ((DataView)gridMatrix.DataContext).ToTable().ToMatrix(matrix);
+                lvMatrix.SelectedIndex = index;
+            }
         }
 
         private void btnDeleteMatrix_Click(object sender, RoutedEventArgs e)
         {
             var index = lvMatrix.SelectedIndex;
 
-            if (lvMatrix != null)
+            if (index != -1)
             {
                 MessageBoxResult odpowiedz = MessageBox.Show("Czy skasować macierz: " + MatrixList[index].ToString() + "?", "Pytanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (odpowiedz == MessageBoxResult.Yes) MatrixList.RemoveAt(index);
@@ -110,7 +115,7 @@ namespace Matrix_Calculator
         private void lvMatrix_KeyDown(object sender, KeyEventArgs e)
         {
             var index = lvMatrix.SelectedIndex;
-            if (e.Key == Key.Delete)
+            if (e.Key == Key.Delete && index != -1)
             {
                 MessageBoxResult odpowiedz = MessageBox.Show("Czy skasować macierz: " + MatrixList[index].ToString() + "?", "Pytanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (odpowiedz == MessageBoxResult.Yes) MatrixList.RemoveAt(index);
@@ -223,6 +228,18 @@ namespace Matrix_Calculator
                 }
             }
         }
+
+        private void tbRows_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+        }
+
+        private void tbCols_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+        }
     }
 
     public class MatrixTemp :IDataErrorInfo
@@ -237,7 +254,6 @@ namespace Matrix_Calculator
         {
             get
             {
-                
                 throw new NotImplementedException();
             }
         }

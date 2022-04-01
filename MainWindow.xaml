@@ -50,6 +50,13 @@
             </Style.Triggers>-->
 
         </Style>
+        <Style x:Key="btnValidationAction" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <TabControl TabStripPlacement="Top">
@@ -69,12 +76,12 @@
                     </Grid.ColumnDefinitions>
                     <WrapPanel Grid.Row="0" Grid.Column="0" Margin="5">
                         <Label Content="Podaj nazwę i rozmiar macierzy [wiersz X kolumna]:      nazwa:" Margin="5,5,0,5"/>
-                        <TextBox x:Name="tbName" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        <TextBox x:Name="tbName" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                         <Label Content="rozmiar:" Margin="5,5,0,5"/>
-                        <TextBox x:Name="tbRows" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Row, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}"/>
+                        <TextBox x:Name="tbRows" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Row, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}" PreviewTextInput="tbRows_PreviewTextInput"/>
                         <Label Content="X" Margin="5"/>
-                        <TextBox x:Name="tbCols" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Col, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}"/>
-                        <Button x:Name="btnAddMatrix" Visibility="Visible" Content="Dodaj macierz" Margin="30,5" Click="btnAddMatrix_Click">
+                        <TextBox x:Name="tbCols" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Col, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}" PreviewTextInput="tbCols_PreviewTextInput"/>
+                        <Button x:Name="btnAddMatrix" Content="Dodaj macierz" Margin="30,5" Click="btnAddMatrix_Click">
                             <!--<Button.Style>
                                 <Style TargetType="{x:Type Button}">
                                     <Style.Triggers>
@@ -87,9 +94,9 @@
                                         <DataTrigger Binding="{Binding Text.Length, ElementName=tbCols, UpdateSourceTrigger=PropertyChanged}" Value="0" >
                                             <Setter Property="IsEnabled" Value="False"/>
                                         </DataTrigger>
-                                        <Trigger SourceName="{StaticResource validationTextBoxStyle}" Property="Validation.HasError" Value="True">
+                                        --><!--<Trigger SourceName="{StaticResource validationTextBoxStyle}" Property="Validation.HasError" Value="True">
                                             <Setter Property="IsEnabled" Value="False"/>
-                                        </Trigger>
+                                        </Trigger>--><!--
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>-->
