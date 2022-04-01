@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:Matrix_Calculator"
         mc:Ignorable="d"
         Title="Matrix Calculator" Height="550" Width="1100">
+    <Window.DataContext>
+        <local:MatrixTemp Name="Matrix" Row="2" Col="2"/>
+    </Window.DataContext>
     <Window.Resources>
         <Style TargetType="DataGrid">
             <Setter Property="MinHeight" Value="20" />
@@ -21,6 +24,31 @@
             <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
             <Setter Property="SelectionMode" Value="Single" />
             <Setter Property="SelectionUnit" Value="Cell" />
+        </Style>
+        <Style x:Key="validationTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <Border BorderBrush="Red" BorderThickness="1" Width="50">
+                                <AdornedElementPlaceholder/>
+                            </Border>
+                            <TextBlock Text="{Binding CurrentItem.ErrorContent}" Foreground="Red"/>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--<Style.Triggers>
+                <Trigger Property="Validation.ErrorTemplate">
+                    <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)/ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>-->
+
         </Style>
     </Window.Resources>
     <Grid>
@@ -41,12 +69,31 @@
                     </Grid.ColumnDefinitions>
                     <WrapPanel Grid.Row="0" Grid.Column="0" Margin="5">
                         <Label Content="Podaj nazwę i rozmiar macierzy [wiersz X kolumna]:      nazwa:" Margin="5,5,0,5"/>
-                        <TextBox x:Name="tbName" Padding="5" MinWidth="100" Margin="5" Text="{Binding MatrixName}"/>
+                        <TextBox x:Name="tbName" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                         <Label Content="rozmiar:" Margin="5,5,0,5"/>
-                        <TextBox x:Name="tbRows" Padding="5" MaxWidth="100" Margin="5" Text="{Binding MatrixRows}"/>
+                        <TextBox x:Name="tbRows" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Row, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}"/>
                         <Label Content="X" Margin="5"/>
-                        <TextBox x:Name="tbCols" Padding="5" MaxWidth="100" Margin="5" Text="{Binding MatrixCols}"/>
-                        <Button x:Name="btnAddMatrix" Content="Dodaj macierz" Margin="30,5" Click="btnAddMatrix_Click"/>
+                        <TextBox x:Name="tbCols" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Col, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}"/>
+                        <Button x:Name="btnAddMatrix" Visibility="Visible" Content="Dodaj macierz" Margin="30,5" Click="btnAddMatrix_Click">
+                            <!--<Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text.Length, ElementName=tbName, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Text.Length, ElementName=tbRows, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Text.Length, ElementName=tbCols, UpdateSourceTrigger=PropertyChanged}" Value="0" >
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                        <Trigger SourceName="{StaticResource validationTextBoxStyle}" Property="Validation.HasError" Value="True">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>-->
+                        </Button>
                         <Button x:Name="btnDeleteMatrix" Content="Usuń macierz" Margin="30,5" Click="btnDeleteMatrix_Click" />
                         <Button x:Name="btnSaveChanges" Content="Zapisz zmiany" Margin="30,5" Click="btnSaveChanges_Click"/>
                     </WrapPanel>

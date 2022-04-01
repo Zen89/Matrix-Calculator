@@ -156,12 +156,12 @@ namespace Matrix_Calculator
                 using (var writer = new StreamWriter($"{path}"))
                 using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                 {
-                    csv.WriteHeader<TesteR>();
+                    csv.WriteHeader<MatrixTemp>();
                     csv.NextRecord();
 
                     foreach (var matrix in MatrixList)
                     {
-                        var record = new TesteR { Row = matrix.MatrixRows, Col = matrix.MatrixCols, Name = matrix.MatrixName };
+                        var record = new MatrixTemp { Row = matrix.MatrixRows, Col = matrix.MatrixCols, Name = matrix.MatrixName };
                         List<double> tab = new List<double>();
 
                         for (int i = 0; i < matrix.MatrixRows; i++)
@@ -196,11 +196,11 @@ namespace Matrix_Calculator
                     while (csv.Read())
                     {
                         List<double> tab = new List<double>();
-                        TesteR record = new TesteR();
+                        MatrixTemp record = new MatrixTemp();
 
                         for (int i = 0; i < 3; i++)
                         {
-                            record = csv.GetRecord<TesteR>();
+                            record = csv.GetRecord<MatrixTemp>();
                         }
 
                         int counter = Convert.ToInt32(record.Row) * Convert.ToInt32(record.Col);
@@ -225,11 +225,45 @@ namespace Matrix_Calculator
         }
     }
 
-    public class TesteR
+    public class MatrixTemp :IDataErrorInfo
     {
         public string Name { get; set; }
         public int Row { get; set; }
         public int Col { get; set; }
         //public int Body { get; set; }
+
+        //TODO replace the validation rules from IDataErrorInfo with INotifyDataErrorInfo
+        public string Error
+        {
+            get
+            {
+                
+                throw new NotImplementedException();
+            }
+        }
+
+        public string this[string nameMatrixProperty]
+        {
+            get
+            {
+                string message = String.Empty;
+                switch(nameMatrixProperty)
+                {
+                    case "Name":
+                        if (string.IsNullOrEmpty(Name))
+                            message = "Nazwa musi być wpisana.";
+                        break;
+                    case "Row":
+                        if (Row < 1 || Row.ToString() == null)
+                            message = "Liczba musi być większa od 0.";
+                        break;
+                    case "Col":
+                        if (Col < 1 || Col.ToString() == null)
+                            message = "Liczba musi być większa od 0.";
+                        break;
+                };
+                return message;
+            }
+        }
     }
 }
