@@ -30,7 +30,7 @@ namespace Matrix_Calculator
     /// 
     public partial class MainWindow : Window
     {
-        internal ObservableCollection<Matrix> MatrixList = new ObservableCollection<Matrix>();
+        public static ObservableCollection<Matrix> MatrixList = new ObservableCollection<Matrix>();
 
         public MainWindow()
         {
@@ -58,6 +58,7 @@ namespace Matrix_Calculator
                 int rows = int.Parse(tbRows.Text);
                 int cols = int.Parse(tbCols.Text);
                 string name = tbName.Text;
+                if (name == "Matrix") name = "Matrix0";
                 Matrix newMatrix = new Matrix(rows, cols, name);
                 MatrixList.Add(newMatrix);
             }
@@ -122,9 +123,18 @@ namespace Matrix_Calculator
         private bool UserFilter(object item)
         {
             if (String.IsNullOrEmpty(txtFilter.Text))
+            {
+                btnSaveChanges.IsEnabled = true;
+                btnDeleteMatrix.IsEnabled = true;
                 return true;
+            }
             else
+            {
+                btnSaveChanges.IsEnabled = false;
+                btnDeleteMatrix.IsEnabled = false;
                 return ((item as Matrix).MatrixName.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+                
         }
 
         private void txtFilter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)

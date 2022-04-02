@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Matrix_Calculator
 {
@@ -20,11 +21,6 @@ namespace Matrix_Calculator
             dialog.Filter = "CSV files (*.csv)|*.csv";
             dialog.FilterIndex = 2;
             dialog.RestoreDirectory = true;
-            //var temp = new C
-            //var float_options = new CsvHelper.TypeConversion.TypeConverterOptions
-            //{
-            //    Formats = new[] { "###.0" }
-            //};
 
             if (dialog.ShowDialog() == true)
             {
@@ -35,7 +31,6 @@ namespace Matrix_Calculator
                 using (var writer = new StreamWriter($"{path}"))
                 using (var csv = new CsvWriter(writer, CultureInfo.CurrentCulture))
                 {
-                    //csv.Configuration.TypeConverterOptionsCache.AddOptions<float>(float_options);
                     csv.WriteHeader<MatrixTemp>();
                     csv.NextRecord();
 
@@ -57,8 +52,8 @@ namespace Matrix_Calculator
                             csv.WriteRecord(record);
                         }
                         catch (Exception ex)
-                        { 
-                            Console.WriteLine(ex.ToString()); 
+                        {
+                            Console.WriteLine(ex.ToString());
                         }
                         csv.NextRecord();
                         csv.WriteRecords(tab);
@@ -73,11 +68,6 @@ namespace Matrix_Calculator
 
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "CSV files (*.csv)|*.csv";
-
-            //var float_options = new CsvHelper.TypeConversion.TypeConverterOptions
-            //{
-            //    Formats = new[] { "###.0" }
-            //};
 
             if (dialog.ShowDialog() == true)
             {
@@ -109,9 +99,10 @@ namespace Matrix_Calculator
                             {
                                 tab.Add(csv.GetRecord<double>());
                             }
-                            catch 
+                            catch
                             {
                                 tab.Add(0);
+                                MessageBox.Show("In matrix was bad element, who was switch to 0");
                             }
                             counter--;
                         }
@@ -158,6 +149,8 @@ namespace Matrix_Calculator
                     case "Name":
                         if (string.IsNullOrEmpty(Name))
                             message = "Nazwa musi być wpisana.";
+                        else if (Name.ToString() == "Matrix")
+                            message = "Nazwa zablokowana, wybierz inną nazwę.";
                         break;
                     case "Row":
                         if (Row < 1 || Row.ToString() == null)

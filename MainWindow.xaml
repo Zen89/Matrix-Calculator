@@ -7,44 +7,33 @@
         mc:Ignorable="d"
         Title="Matrix Calculator" Height="550" Width="1100">
     <Window.DataContext>
-        <local:MatrixTemp Name="Matrix" Row="2" Col="2"/>
+        <local:MatrixTemp Name="Matrix0" Row="2" Col="2"/>
     </Window.DataContext>
     <Window.Resources>
         <Style TargetType="DataGrid">
             <Setter Property="MinHeight" Value="20" />
-            <Setter Property="MinWidth" Value="30" />
+            <Setter Property="MinWidth" Value="35" />
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="CanUserAddRows" Value="False" />
             <Setter Property="HeadersVisibility" Value="None" />
             <Setter Property="RowHeight" Value="20" />
-            <Setter Property="MinColumnWidth" Value="30" />
-            <Setter Property="ColumnWidth" Value="30" />
+            <Setter Property="MinColumnWidth" Value="35" />
+            <!--<Setter Property="ColumnWidth" Value="35" />-->
             <Setter Property="ItemsSource" Value="{Binding}" />
             <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
             <Setter Property="SelectionMode" Value="Single" />
             <Setter Property="SelectionUnit" Value="Cell" />
-            <Setter Property="Validation.ErrorTemplate">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <StackPanel>
-                            <Border BorderBrush="Red" BorderThickness="1" Width="50">
-                                <AdornedElementPlaceholder/>
-                            </Border>
-                        </StackPanel>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
         </Style>
         <Style x:Key="validationTextBoxStyle" TargetType="TextBox">
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Padding" Value="5"/>
-            <Setter Property="Width" Value="50"/>
+            <Setter Property="Width" Value="60"/>
             <Setter Property="Validation.ErrorTemplate">
                 <Setter.Value>
                     <ControlTemplate>
                         <StackPanel>
-                            <Border BorderBrush="Red" BorderThickness="1" Width="50">
+                            <Border BorderBrush="Red" BorderThickness="1" Width="60">
                                 <AdornedElementPlaceholder/>
                             </Border>
                             <TextBlock Text="{Binding CurrentItem.ErrorContent}" Foreground="Red"/>

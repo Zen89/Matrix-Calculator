@@ -14,7 +14,7 @@ namespace Matrix_Calculator
         public int MatrixRows { get; set; }
         public int MatrixCols { get; set; }
 
-        public Matrix(int rows, int cols, string name = "Matrix")
+        public Matrix(int rows, int cols, string name = "Matrix0")
         {
             MatrixName = name;
             MatrixBody = new double[rows, cols];
