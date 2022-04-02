@@ -20,6 +20,11 @@ namespace Matrix_Calculator
             dialog.Filter = "CSV files (*.csv)|*.csv";
             dialog.FilterIndex = 2;
             dialog.RestoreDirectory = true;
+            //var temp = new C
+            //var float_options = new CsvHelper.TypeConversion.TypeConverterOptions
+            //{
+            //    Formats = new[] { "###.0" }
+            //};
 
             if (dialog.ShowDialog() == true)
             {
@@ -28,8 +33,9 @@ namespace Matrix_Calculator
                 path = path.Substring(8);
 
                 using (var writer = new StreamWriter($"{path}"))
-                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                using (var csv = new CsvWriter(writer, CultureInfo.CurrentCulture))
                 {
+                    //csv.Configuration.TypeConverterOptionsCache.AddOptions<float>(float_options);
                     csv.WriteHeader<MatrixTemp>();
                     csv.NextRecord();
 
@@ -67,6 +73,12 @@ namespace Matrix_Calculator
 
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "CSV files (*.csv)|*.csv";
+
+            //var float_options = new CsvHelper.TypeConversion.TypeConverterOptions
+            //{
+            //    Formats = new[] { "###.0" }
+            //};
+
             if (dialog.ShowDialog() == true)
             {
                 string path = (new Uri(dialog.FileName)).ToString();
@@ -74,7 +86,7 @@ namespace Matrix_Calculator
                 path = path.Substring(8);
 
                 using (var reader = new StreamReader($"{path}"))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                using (var csv = new CsvReader(reader, CultureInfo.CurrentCulture))
                 {
                     while (csv.Read())
                     {
@@ -83,13 +95,24 @@ namespace Matrix_Calculator
 
                         for (int i = 0; i < 3; i++)
                         {
-                            record = csv.GetRecord<MatrixTemp>();
+                            try
+                            {
+                                record = csv.GetRecord<MatrixTemp>();
+                            }
+                            catch { }
                         }
 
                         int counter = Convert.ToInt32(record.Row) * Convert.ToInt32(record.Col);
                         while (counter > 0 && csv.Read())
                         {
-                            tab.Add(csv.GetRecord<double>());
+                            try
+                            {
+                                tab.Add(csv.GetRecord<double>());
+                            }
+                            catch 
+                            {
+                                tab.Add(0);
+                            }
                             counter--;
                         }
 

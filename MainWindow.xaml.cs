@@ -70,12 +70,17 @@ namespace Matrix_Calculator
             {
                 for (int k = 0; k < MatrixList.Count; k++)
                 {
-                    if (item.Content.ToString().Contains(MatrixList[k].MatrixName))
+                    try
                     {
-                        Matrix matrix = MatrixList[k];
-                        DataTable dataTable = matrix.ToDataTable();
-                        gridMatrix.DataContext = dataTable.DefaultView;
+                        if (item.Content.ToString().Contains(MatrixList[k].MatrixName))
+                        {
+                            Matrix matrix = MatrixList[k];
+                            DataTable dataTable = matrix.ToDataTable();
+                            gridMatrix.DataContext = dataTable.DefaultView;
+                        }
                     }
+                    catch (Exception ex)
+                    { Console.WriteLine(ex.Message); }
                 }
             }
         }

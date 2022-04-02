@@ -35,7 +35,14 @@ namespace Matrix_Calculator
             for (int i = 0; i < table.Rows.Count; i++)
                 for (int j = 0; j < table.Columns.Count; j++)
                 {
-                    result.MatrixBody[i, j] = Convert.ToDouble(table.Rows[i][j]);
+                    try
+                    {
+                        result.MatrixBody[i, j] = Convert.ToDouble(table.Rows[i][j]);
+                    }
+                    catch 
+                    {
+                        result.MatrixBody[i, j] = 0.0;
+                    }
                 }
             return result;
         }

@@ -24,6 +24,17 @@
             <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
             <Setter Property="SelectionMode" Value="Single" />
             <Setter Property="SelectionUnit" Value="Cell" />
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <Border BorderBrush="Red" BorderThickness="1" Width="50">
+                                <AdornedElementPlaceholder/>
+                            </Border>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style x:Key="validationTextBoxStyle" TargetType="TextBox">
             <Setter Property="Margin" Value="5"/>
@@ -41,21 +52,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <!--<Style.Triggers>
-                <Trigger Property="Validation.ErrorTemplate">
-                    <Setter Property="ToolTip"
-                        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
-                        Path=(Validation.Errors)/ErrorContent}"/>
-                </Trigger>
-            </Style.Triggers>-->
-
-        </Style>
-        <Style x:Key="btnValidationAction" TargetType="Button">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="True">
-                    <Setter Property="IsEnabled" Value="False"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
     </Window.Resources>
     <Grid>
@@ -81,26 +77,7 @@
                         <TextBox x:Name="tbRows" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Row, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}" PreviewTextInput="tbRows_PreviewTextInput"/>
                         <Label Content="X" Margin="5"/>
                         <TextBox x:Name="tbCols" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Col, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}" PreviewTextInput="tbCols_PreviewTextInput"/>
-                        <Button x:Name="btnAddMatrix" Content="Dodaj macierz" Margin="30,5" Click="btnAddMatrix_Click">
-                            <!--<Button.Style>
-                                <Style TargetType="{x:Type Button}">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text.Length, ElementName=tbName, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                            <Setter Property="IsEnabled" Value="False"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Text.Length, ElementName=tbRows, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                            <Setter Property="IsEnabled" Value="False"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Text.Length, ElementName=tbCols, UpdateSourceTrigger=PropertyChanged}" Value="0" >
-                                            <Setter Property="IsEnabled" Value="False"/>
-                                        </DataTrigger>
-                                        --><!--<Trigger SourceName="{StaticResource validationTextBoxStyle}" Property="Validation.HasError" Value="True">
-                                            <Setter Property="IsEnabled" Value="False"/>
-                                        </Trigger>--><!--
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>-->
-                        </Button>
+                        <Button x:Name="btnAddMatrix" Content="Dodaj macierz" Margin="30,5" Click="btnAddMatrix_Click"/>
                         <Button x:Name="btnDeleteMatrix" Content="Usuń macierz" Margin="30,5" Click="btnDeleteMatrix_Click" />
                         <Button x:Name="btnSaveChanges" Content="Zapisz zmiany" Margin="30,5" Click="btnSaveChanges_Click"/>
                     </WrapPanel>
@@ -123,7 +100,6 @@
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Width="230" DisplayMemberBinding="{Binding MatrixName}"/>
-                                        <!--DisplayMemberBinding-->
                                     </GridView>
                                 </ListView.View>
                                 <ListView.ItemContainerStyle>
@@ -133,7 +109,9 @@
                                 </ListView.ItemContainerStyle>
                             </ListView>
                         </Grid>
-                        <DataGrid x:Name="gridMatrix" Margin="5" ItemsSource="{Binding}"/>
+                        <DataGrid x:Name="gridMatrix" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
+                            
+                        </DataGrid>
                     </DockPanel>
                 </Grid>
             </TabItem>
