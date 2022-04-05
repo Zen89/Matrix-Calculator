@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Matrix_Calculator"
         mc:Ignorable="d"
-        Title="Matrix Calculator" Height="550" Width="1100">
+        Title="Matrix Calculator" Height="550" Width="1100" ResizeMode="NoResize">
     <Window.DataContext>
         <local:MatrixTemp Name="Matrix0" Row="2" Col="2"/>
     </Window.DataContext>
@@ -81,11 +81,12 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Border HorizontalAlignment="Center"  VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
-                        <WrapPanel Grid.Row="0" Grid.Column="0" Margin="4">
-                            <Label Content="Podaj nazwę i rozmiar macierzy [wiersz X kolumna]:      nazwa:" Margin="5,5,0,5"/>
+                    <Border HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
+                        <WrapPanel Grid.Row="0" Grid.Column="0" Margin="5">
+                            <Label Content="Podaj nazwę i rozmiar macierzy [wiersz X kolumna]:" Margin="5,5,0,5" FontWeight="Bold"/>
+                            <Label Content="nazwa:" Margin="0,5,0,5"/>
                             <TextBox x:Name="tbName" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                            <Label Content="rozmiar:" Margin="5,5,0,5"/>
+                            <Label Content="rozmiar:" Margin="0,5,0,5"/>
                             <TextBox x:Name="tbRows" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Row, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}" PreviewTextInput="tbRows_PreviewTextInput"/>
                             <Label Content="X" Margin="5"/>
                             <TextBox x:Name="tbCols" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Col, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}" PreviewTextInput="tbCols_PreviewTextInput"/>
