@@ -160,6 +160,8 @@
                             <ComboBox Name="cbMatrixA" Margin="5" Width="80" Height="25" ItemsSource="{Binding MatrixList}" SelectionChanged="cbMatrixA_SelectionChanged"/>
                             <Label Content="+/- Macierz B" Margin="0,5,0,5"/>
                             <ComboBox Name="cbMatrixB" Margin="5" Width="80" Height="25" ItemsSource="{Binding MatrixList}" SelectionChanged="cbMatrixB_SelectionChanged"/>
+                            <Label Content="Nazwa maicerzy C:" Margin="0,5,0,5"/>
+                            <TextBox x:Name="tbMatrixC" Margin="5" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                         </WrapPanel>
                     </Border>
                     <DockPanel LastChildFill="True" Grid.Row="1" Grid.Column="0" Margin="5">
@@ -177,8 +179,8 @@
 
                             </DataGrid>
                         </Border>
-                        <Button x:Name="btnPlusMinus" Content="Wykonaj" Margin="45,5,5,5" Click="btnPlusMinus_Click"/>
-                        <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
+                        <Button x:Name="btnPlusMinus" Content="Wykonaj i zapisz" Margin="30,5,5,5" Click="btnPlusMinus_Click"/>
+                            <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
                             <DataGrid x:Name="gridMatrixC" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
 
                             </DataGrid>

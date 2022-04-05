@@ -210,27 +210,31 @@ namespace Matrix_Calculator
         {
             var matrixA = cbMatrixA.SelectedItem as Matrix;
             var matrixB = cbMatrixB.SelectedItem as Matrix;
-            Matrix matrixAB = new Matrix(matrixA.MatrixRows, matrixA.MatrixCols, "Matrix AB");
+            string name = tbMatrixC.Text;
+            Matrix matrixC = new Matrix(matrixA.MatrixRows, matrixA.MatrixCols, name);
             try
             {
                 switch (operation)
                 {
                     case Operations.Addition:
-                        matrixAB = matrixA + matrixB;
+                        matrixC = matrixA + matrixB;
                         break;
                     case Operations.Subtraction:
-                        matrixAB = matrixA - matrixB;
+                        matrixC = matrixA - matrixB;
                         break;
                     //case Operations.Multiplication:
                     //    matrixAB = matrixA * matrixB;
                     //    break;
                 }
-                DataTable dataTable = matrixAB.ToDataTable();
+                matrixC.MatrixName = name;
+                DataTable dataTable = matrixC.ToDataTable();
                 gridMatrixC.DataContext = dataTable.DefaultView;
+                MatrixList.Add(matrixC);
+                if(matrixC.MatrixName == tbName.Text) tbName.Text = $"Matrix {MatrixList.Count}";
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка");
+                MessageBox.Show(ex.Message);
             }
         }
 
