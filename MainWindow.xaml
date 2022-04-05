@@ -142,6 +142,48 @@
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Dodawanie" Foreground="Black" FontWeight="Bold" Padding="5,0"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Margin="5" Background="{StaticResource LightGrayBlueGradientBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
+                        <WrapPanel Grid.Row="0" Grid.Column="0" Margin="5">
+                            <Label Content="Aby dodać/odjąć do/od siebie macierze, wybierz macierze A i B o takich samych rozmiarach:" Margin="5,5,0,5" FontWeight="Bold"/>
+                            <Label Content="Macierz A" Margin="0,5,0,5"/>
+                            <ComboBox Name="cbMatrixA" Margin="5" Width="80" Height="25" ItemsSource="{Binding MatrixList}" SelectionChanged="cbMatrixA_SelectionChanged"/>
+                            <Label Content="+/- Macierz B" Margin="0,5,0,5"/>
+                            <ComboBox Name="cbMatrixB" Margin="5" Width="80" Height="25" ItemsSource="{Binding MatrixList}" SelectionChanged="cbMatrixB_SelectionChanged"/>
+                        </WrapPanel>
+                    </Border>
+                    <DockPanel LastChildFill="True" Grid.Row="1" Grid.Column="0" Margin="5">
+                        <Border HorizontalAlignment="Stretch" Width="240" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
+                            <DataGrid x:Name="gridMatrixA" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
+
+                            </DataGrid>
+                        </Border>
+                        <Border HorizontalAlignment="Stretch" Width="240" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
+                            <DataGrid x:Name="gridMatrixB" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
+
+                            </DataGrid>
+                        </Border>
+                        <Border HorizontalAlignment="Stretch" Width="240" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
+                            <DataGrid x:Name="gridMatrixC" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
+
+                            </DataGrid>
+                        </Border>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Mnożenie" Foreground="Black" FontWeight="Bold" Padding="5,0"/>
                     </StackPanel>
                 </TabItem.Header>

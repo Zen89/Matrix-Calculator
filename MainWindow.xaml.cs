@@ -42,6 +42,10 @@ namespace Matrix_Calculator
         {
             lvMatrix.ItemsSource = MatrixList;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvMatrix.ItemsSource);
+            cbMatrixA.ItemsSource = MatrixList;
+            CollectionView viewA = (CollectionView)CollectionViewSource.GetDefaultView(cbMatrixA.ItemsSource);
+            cbMatrixB.ItemsSource = MatrixList;
+            CollectionView viewB = (CollectionView)CollectionViewSource.GetDefaultView(cbMatrixB.ItemsSource);
             view.Filter = UserFilter;
         }
 
@@ -134,7 +138,7 @@ namespace Matrix_Calculator
                 btnDeleteMatrix.IsEnabled = false;
                 return ((item as Matrix).MatrixName.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0);
             }
-                
+
         }
 
         private void txtFilter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -162,6 +166,40 @@ namespace Matrix_Calculator
         {
             var textBox = sender as TextBox;
             e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+        }
+
+        private void cbMatrixA_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = cbMatrixA.SelectedItem as Matrix;
+            if (item != null)
+            {
+                try
+                {
+                    Matrix matrix = item;
+                    MessageBox.Show(matrix.ToString());
+                    DataTable dataTable = matrix.ToDataTable();
+                    gridMatrixA.DataContext = dataTable.DefaultView;
+                }
+                catch (Exception ex)
+                { Console.WriteLine(ex.Message); }
+            }
+        }
+
+        private void cbMatrixB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = cbMatrixB.SelectedItem as Matrix;
+            if (item != null)
+            {
+                try
+                {
+                    Matrix matrix = item;
+                    MessageBox.Show(matrix.ToString());
+                    DataTable dataTable = matrix.ToDataTable();
+                    gridMatrixB.DataContext = dataTable.DefaultView;
+                }
+                catch (Exception ex)
+                { Console.WriteLine(ex.Message); }
+            }
         }
     }
 }
