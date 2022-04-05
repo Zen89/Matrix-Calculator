@@ -51,5 +51,54 @@ namespace Matrix_Calculator
             return sb.ToString();
         }
 
+        public static Matrix operator +(Matrix matrixA, Matrix matrixB)
+        {
+            Matrix matrixAplusB = new Matrix(matrixA.MatrixRows, matrixA.MatrixCols, "Matrix AB");
+
+            try
+            {
+                if(matrixA.MatrixRows == matrixB.MatrixRows && matrixA.MatrixCols == matrixB.MatrixCols)
+                {
+                    for(int i = 0; i < matrixA.MatrixRows; i++)
+                        for(int j = 0; j < matrixA.MatrixCols; j++)
+                            matrixAplusB[i, j] = matrixA[i, j] + matrixB[i, j];
+
+                    return matrixAplusB;
+                }
+                else
+                {
+                    throw new Exception("Macierze nie mają tych samych rozmiarów!");
+                }
+            }
+            catch (Exception ex) 
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static Matrix operator -(Matrix matrixA, Matrix matrixB)
+        {
+            Matrix matrixAminusB = new Matrix(matrixA.MatrixRows, matrixA.MatrixCols, "Matrix AB");
+
+            try
+            {
+                if (matrixA.MatrixRows == matrixB.MatrixRows && matrixA.MatrixCols == matrixB.MatrixCols)
+                {
+                    for (int i = 0; i < matrixA.MatrixRows; i++)
+                        for (int j = 0; j < matrixA.MatrixCols; j++)
+                            matrixAminusB[i, j] = matrixA[i, j] - matrixB[i, j];
+
+                    return matrixAminusB;
+                }
+                else
+                {
+                    throw new Exception("Macierze nie mają tych samych rozmiarów!");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

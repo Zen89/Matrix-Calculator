@@ -30,6 +30,13 @@ namespace Matrix_Calculator
     /// 
     public partial class MainWindow : Window
     {
+        enum Operations
+        {
+            Addition,
+            Subtraction,
+            Multiplication
+        }
+
         public static ObservableCollection<Matrix> MatrixList = new ObservableCollection<Matrix>();
 
         public MainWindow()
@@ -62,9 +69,10 @@ namespace Matrix_Calculator
                 int rows = int.Parse(tbRows.Text);
                 int cols = int.Parse(tbCols.Text);
                 string name = tbName.Text;
-                if (name == "Matrix") name = "Matrix0";
+                if (name == "Matrix") name = "Matrix 0";
                 Matrix newMatrix = new Matrix(rows, cols, name);
                 MatrixList.Add(newMatrix);
+                tbName.Text = $"Matrix {MatrixList.Count}";
             }
         }
 
@@ -170,13 +178,11 @@ namespace Matrix_Calculator
 
         private void cbMatrixA_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var item = cbMatrixA.SelectedItem as Matrix;
-            if (item != null)
+            var matrix = cbMatrixA.SelectedItem as Matrix;
+            if (matrix != null)
             {
                 try
                 {
-                    Matrix matrix = item;
-                    MessageBox.Show(matrix.ToString());
                     DataTable dataTable = matrix.ToDataTable();
                     gridMatrixA.DataContext = dataTable.DefaultView;
                 }
@@ -187,13 +193,11 @@ namespace Matrix_Calculator
 
         private void cbMatrixB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var item = cbMatrixB.SelectedItem as Matrix;
-            if (item != null)
+            var matrix = cbMatrixB.SelectedItem as Matrix;
+            if (matrix != null)
             {
                 try
                 {
-                    Matrix matrix = item;
-                    MessageBox.Show(matrix.ToString());
                     DataTable dataTable = matrix.ToDataTable();
                     gridMatrixB.DataContext = dataTable.DefaultView;
                 }
@@ -201,5 +205,46 @@ namespace Matrix_Calculator
                 { Console.WriteLine(ex.Message); }
             }
         }
+
+        private void CalculateMatricesAndSetResult(Operations operation)
+        {
+            var matrixA = cbMatrixA.SelectedItem as Matrix;
+            var matrixB = cbMatrixB.SelectedItem as Matrix;
+            Matrix matrixAB = new Matrix(matrixA.MatrixRows, matrixA.MatrixCols, "Matrix AB");
+            try
+            {
+                switch (operation)
+                {
+                    case Operations.Addition:
+                        matrixAB = matrixA + matrixB;
+                        break;
+                    case Operations.Subtraction:
+                        matrixAB = matrixA - matrixB;
+                        break;
+                    //case Operations.Multiplication:
+                    //    matrixAB = matrixA * matrixB;
+                    //    break;
+                }
+                DataTable dataTable = matrixAB.ToDataTable();
+                gridMatrixC.DataContext = dataTable.DefaultView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        private void btnPlusMinus_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)rbPlus.IsChecked)
+            {
+                CalculateMatricesAndSetResult(Operations.Addition);
+            }
+            else if ((bool)rbMinus.IsChecked)
+            {
+                CalculateMatricesAndSetResult(Operations.Subtraction);
+            }
+        }
+
     }
 }

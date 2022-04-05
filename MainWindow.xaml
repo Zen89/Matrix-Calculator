@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Matrix Calculator" Height="550" Width="1100" ResizeMode="NoResize">
     <Window.DataContext>
-        <local:MatrixTemp Name="Matrix0" Row="2" Col="2"/>
+        <local:MatrixTemp Name="Matrix 0" Row="2" Col="2"/>
     </Window.DataContext>
     <Window.Resources>
         <LinearGradientBrush x:Key="DarkGrayBlueGradientBrush" StartPoint="0,1" EndPoint="1,0">
@@ -63,6 +63,7 @@
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Margin" Value="5" />
+            <Setter Property="Height" Value="25"/>
         </Style>
     </Window.Resources>
     <Grid Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -132,11 +133,10 @@
                         </Border>
                         <Border HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
                             <DataGrid x:Name="gridMatrix" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
-                            
+
                             </DataGrid>
                         </Border>
                     </DockPanel>
-                    
                 </Grid>
             </TabItem>
             <TabItem>
@@ -163,17 +163,22 @@
                         </WrapPanel>
                     </Border>
                     <DockPanel LastChildFill="True" Grid.Row="1" Grid.Column="0" Margin="5">
-                        <Border HorizontalAlignment="Stretch" Width="240" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
+                        <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
                             <DataGrid x:Name="gridMatrixA" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
 
                             </DataGrid>
                         </Border>
-                        <Border HorizontalAlignment="Stretch" Width="240" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center"  Margin="5">
+                            <RadioButton Content="+" IsChecked="True" Margin="5" Name="rbPlus"/>
+                            <RadioButton Content="-" Margin="5" Name="rbMinus"/>
+                        </StackPanel>
+                        <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
                             <DataGrid x:Name="gridMatrixB" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
 
                             </DataGrid>
                         </Border>
-                        <Border HorizontalAlignment="Stretch" Width="240" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
+                        <Button x:Name="btnPlusMinus" Content="Wykonaj" Margin="45,5,5,5" Click="btnPlusMinus_Click"/>
+                        <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
                             <DataGrid x:Name="gridMatrixC" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
 
                             </DataGrid>
