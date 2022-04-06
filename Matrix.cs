@@ -23,7 +23,7 @@ namespace Matrix_Calculator
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    MatrixBody[i, j] = i+j;
+                    MatrixBody[i, j] = 0;
                 }
             }
             MatrixRows = rows;
@@ -57,10 +57,10 @@ namespace Matrix_Calculator
 
             try
             {
-                if(matrixA.MatrixRows == matrixB.MatrixRows && matrixA.MatrixCols == matrixB.MatrixCols)
+                if (matrixA.MatrixRows == matrixB.MatrixRows && matrixA.MatrixCols == matrixB.MatrixCols)
                 {
-                    for(int i = 0; i < matrixA.MatrixRows; i++)
-                        for(int j = 0; j < matrixA.MatrixCols; j++)
+                    for (int i = 0; i < matrixA.MatrixRows; i++)
+                        for (int j = 0; j < matrixA.MatrixCols; j++)
                             matrixAplusB[i, j] = matrixA[i, j] + matrixB[i, j];
 
                     return matrixAplusB;
@@ -70,7 +70,7 @@ namespace Matrix_Calculator
                     throw new Exception("Macierze nie mają tych samych rozmiarów!");
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -94,6 +94,50 @@ namespace Matrix_Calculator
                 {
                     throw new Exception("Macierze nie mają tych samych rozmiarów!");
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static Matrix operator *(Matrix matrixA, Matrix matrixB)
+        {
+            Matrix matrixAmultiB = new Matrix(matrixA.MatrixRows, matrixB.MatrixCols, "MatrixAB");
+
+            try
+            {
+                if (matrixA.MatrixCols == matrixB.MatrixRows)
+                {
+                    for (int i = 0; i < matrixA.MatrixRows; i++)
+                        for (int j = 0; j < matrixB.MatrixCols; j++)
+                            for (int k = 0; k < matrixA.MatrixCols; k++)
+                                matrixAmultiB[i, j] += matrixA[i, k] * matrixB[k, j];
+
+                    return matrixAmultiB;
+                }
+                else
+                {
+                    throw new Exception("Liczba kolumn macierzy A nie jest równa liczbie wierszy macierzy B!");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static Matrix Transpose(Matrix matrixAA)
+        {
+            Matrix matrixAT = new Matrix(matrixAA.MatrixCols, matrixAA.MatrixRows, $"{matrixAA.MatrixName}T");
+
+            try
+            {
+                for (int i = 0; i < matrixAA.MatrixRows; i++)
+                    for (int j = 0; j < matrixAA.MatrixCols; j++)
+                        matrixAT[j, i] = matrixAA[i, j];
+
+                return matrixAT;
             }
             catch (Exception ex)
             {

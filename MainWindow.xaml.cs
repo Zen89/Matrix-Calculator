@@ -53,6 +53,8 @@ namespace Matrix_Calculator
             CollectionView viewA = (CollectionView)CollectionViewSource.GetDefaultView(cbMatrixA.ItemsSource);
             cbMatrixB.ItemsSource = MatrixList;
             CollectionView viewB = (CollectionView)CollectionViewSource.GetDefaultView(cbMatrixB.ItemsSource);
+            cbMatrixAA.ItemsSource = MatrixList;
+            CollectionView viewAA = (CollectionView)CollectionViewSource.GetDefaultView(cbMatrixAA.ItemsSource);
             view.Filter = UserFilter;
         }
 
@@ -222,9 +224,9 @@ namespace Matrix_Calculator
                     case Operations.Subtraction:
                         matrixC = matrixA - matrixB;
                         break;
-                    //case Operations.Multiplication:
-                    //    matrixAB = matrixA * matrixB;
-                    //    break;
+                    case Operations.Multiplication:
+                        matrixC = matrixA * matrixB;
+                        break;
                 }
                 matrixC.MatrixName = name;
                 DataTable dataTable = matrixC.ToDataTable();
@@ -238,7 +240,7 @@ namespace Matrix_Calculator
             }
         }
 
-        private void btnPlusMinus_Click(object sender, RoutedEventArgs e)
+        private void btnCalculate_Click(object sender, RoutedEventArgs e)
         {
             if ((bool)rbPlus.IsChecked)
             {
@@ -248,7 +250,50 @@ namespace Matrix_Calculator
             {
                 CalculateMatricesAndSetResult(Operations.Subtraction);
             }
+            else if ((bool)rbMulti.IsChecked)
+            {
+                CalculateMatricesAndSetResult(Operations.Multiplication);
+            }
         }
 
+        private void cbMatrixAA_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var matrix = cbMatrixAA.SelectedItem as Matrix;
+            if (matrix != null)
+            {
+                try
+                {
+                    DataTable dataTable = matrix.ToDataTable();
+                    gridMatrixAA.DataContext = dataTable.DefaultView;
+                }
+                catch (Exception ex)
+                { Console.WriteLine(ex.Message); }
+            }
+        }
+
+        private void btnTranspose_Click(object sender, RoutedEventArgs e)
+        {
+            var matrixAA = cbMatrixAA.SelectedItem as Matrix;
+            string name = tbMatrixD.Text;
+            Matrix matrixAT = new Matrix(matrixAA.MatrixCols, matrixAA.MatrixRows, name);
+            try
+            {
+                matrixAT = Matrix.Transpose(matrixAA);
+                matrixAT.MatrixName = name;
+                DataTable dataTable = matrixAT.ToDataTable();
+                gridMatrixD.DataContext = dataTable.DefaultView;
+                MatrixList.Add(matrixAT);
+                if (matrixAT.MatrixName == tbName.Text) tbName.Text = $"Matrix {MatrixList.Count}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnInvert_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
