@@ -293,7 +293,22 @@ namespace Matrix_Calculator
 
         private void btnInvert_Click(object sender, RoutedEventArgs e)
         {
-
+            var matrixAA = cbMatrixAA.SelectedItem as Matrix;
+            string name = tbMatrixD.Text;
+            Matrix matrixAT = new Matrix(matrixAA.MatrixCols, matrixAA.MatrixRows, name);
+            try
+            {
+                matrixAT = Matrix.Invert(matrixAA);
+                matrixAT.MatrixName = name;
+                DataTable dataTable = matrixAT.ToDataTable();
+                gridMatrixD.DataContext = dataTable.DefaultView;
+                MatrixList.Add(matrixAT);
+                if (matrixAT.MatrixName == tbName.Text) tbName.Text = $"Matrix {MatrixList.Count}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
