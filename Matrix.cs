@@ -145,13 +145,17 @@ namespace Matrix_Calculator
             }
         }
 
-        public static Matrix Invert(Matrix matrixAA)
+        public static double determinantBareiss(Matrix matrixAA, Matrix matrixIdentity)
         {
-            Matrix matrixAa = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols, matrixAA.MatrixName);
+            Matrix matrixDB = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols, matrixAA.MatrixName);
             Matrix matrixTmp = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols, matrixAA.MatrixName);
+            Matrix matrixIdentityTmp = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols, matrixAA.MatrixName);
             for (int i = 0; i < matrixAA.MatrixRows; i++)
                 for (int j = 0; j < matrixAA.MatrixCols; j++)
-                    matrixAa[i, j] = matrixAA[i, j];
+                {
+                    matrixDB[i, j] = matrixAA[i, j];
+                }
+                    
             double detA = 0;
 
             try
@@ -186,43 +190,114 @@ namespace Matrix_Calculator
                 //Console.WriteLine(detA.ToString());
 
                 //wyznacznik dla macierzy n x n algorytmem Bareissa
-                for (int n = 0; n < matrixAA.MatrixRows; n++)
+                if (matrixAA.MatrixRows == matrixAA.MatrixCols)
                 {
-                    double p = 1.0;
-                    if (n > 0)
+                    for (int n = 0; n < matrixAA.MatrixRows; n++)
                     {
-                        p = matrixAa[n - 1, n - 1];
+                        double p = 1.0;
+                        if (n > 0)
+                        {
+                            p = matrixDB[n - 1, n - 1];
+                            for (int i = 0; i < matrixAA.MatrixRows; i++)
+                                for (int j = 0; j < matrixAA.MatrixCols; j++)
+                                {
+                                    matrixDB[i, j] = matrixTmp[i, j];
+                                    matrixIdentity[i, j] = matrixIdentityTmp[i, j];
+                                }
+                        }
+
+                        for (int i = 0; i < matrixAA.MatrixRows; i++)
+                        {
+                            if (n == i)
+                            {
+                                for (int j = 0; j < matrixAA.MatrixCols; j++)
+                                {
+                                    matrixTmp[i, j] = matrixDB[i, j];
+                                    matrixIdentityTmp[i, j] = matrixIdentity[i, j];
+                                }
+                            }
+                            else
+                            {
+                                for (int j = 0; j < matrixAA.MatrixCols; j++)
+                                {
+                                    matrixTmp[i, j] = (matrixDB[n, n] * matrixDB[i, j] - matrixDB[i, n] * matrixDB[n, j]) / p;
+                                    matrixIdentityTmp[i, j] = (matrixDB[n, n] * matrixIdentity[i, j] - matrixDB[i, n] * matrixIdentity[n, j]) / p;
+                                }
+                            }
+                        }
+                    }
+                    for (int i = 0; i < matrixAA.MatrixRows; i++)
+                        for (int j = 0; j < matrixAA.MatrixCols; j++)
+                        {
+                            matrixIdentity[i, j] = matrixIdentityTmp[i, j];
+                        }
+                    detA = matrixTmp[matrixTmp.MatrixRows - 1, matrixTmp.MatrixCols - 1];
+                    return detA;
+                }
+                else
+                {
+                    throw new Exception("Liczba kolumn macierzy A nie jest równa liczbie wierszy!");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static Matrix Invert(Matrix matrixAA)
+        {
+
+            Matrix matrixAlgebraicComplements = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols);
+            Matrix matrixTemp = new Matrix(matrixAA.MatrixRows - 1, matrixAA.MatrixCols - 1);
+            Matrix matrixACT = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols);
+            Matrix matrixIdentity = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols, matrixAA.MatrixName);
+            try
+            {
+                if (matrixAA.MatrixRows == matrixAA.MatrixCols)
+                {
+                    for (int i = 0; i < matrixAA.MatrixRows; i++)
+                        matrixIdentity[i, i] = 1;
+                    double detA = determinantBareiss(matrixAA, matrixIdentity);
+                    if (detA != 0)
+                    {
+                        Console.WriteLine(detA.ToString());
+                        //for (int i = 0; i < matrixAA.MatrixRows; i++)
+                        //    for (int j = 0; j < matrixAA.MatrixCols; j++)
+                        //    {
+                        //        int k = 0;
+                        //        for (int m = 0; m < matrixAA.MatrixRows; m++)
+                        //        {
+                        //            if (m != i)
+                        //            {
+                        //                int l = 0;
+                        //                for (int n = 0; n < matrixAA.MatrixCols; n++)
+                        //                {
+                        //                    if (n != j)
+                        //                    {
+                        //                        matrixTemp[k, l++] = matrixAA[m, n];
+                        //                    }
+                        //                }
+                        //                k++;
+                        //            }
+                        //        }
+                        //        matrixAlgebraicComplements[i, j] = Math.Pow((-1), (i + 1 + j + 1)) * determinantBareiss(matrixTemp);
+                        //    }
+                        //matrixACT = Transpose(matrixAlgebraicComplements);
                         for (int i = 0; i < matrixAA.MatrixRows; i++)
                             for (int j = 0; j < matrixAA.MatrixCols; j++)
-                                matrixAa[i, j] = matrixTmp[i, j];
+                                matrixIdentity[i, j] = matrixIdentity[i, j] / detA;
+                        return matrixIdentity;
                     }
-
-                    for (int i = 0; i < matrixAA.MatrixRows; i++)
+                    else
                     {
-                        if (n == i)
-                        {
-                            for (int j = 0; j < matrixAA.MatrixCols; j++)
-                            {
-                                matrixTmp[i, j] = matrixAa[i, j];
-                            }
-                        }
-                        else
-                        {
-                            for (int j = 0; j < matrixAA.MatrixCols; j++)
-                            {
-                                matrixTmp[i, j] = (matrixAa[n, n] * matrixAa[i, j] - matrixAa[i, n] * matrixAa[n, j]) / p;
-                            }
-                        }
-                        
-                            
+                        throw new Exception("Wyznacznik macierzy równy 0, nie można odwrócić macierzy!");
                     }
-                        
                 }
-                
-                detA = matrixTmp[matrixTmp.MatrixRows-1, matrixTmp.MatrixCols-1];
-                Console.WriteLine(detA.ToString());
-
-                return matrixAa;
+                else
+                {
+                    throw new Exception("Liczba kolumn macierzy A nie jest równa liczbie wierszy!");
+                }
             }
             catch (Exception ex)
             {
