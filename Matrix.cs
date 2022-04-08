@@ -145,17 +145,16 @@ namespace Matrix_Calculator
             }
         }
 
-        public static double determinantBareiss(Matrix matrixAA, Matrix matrixIdentity)
+        public static double determinantBareiss(Matrix matrixAA)
         {
             Matrix matrixDB = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols, matrixAA.MatrixName);
             Matrix matrixTmp = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols, matrixAA.MatrixName);
-            Matrix matrixIdentityTmp = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols, matrixAA.MatrixName);
             for (int i = 0; i < matrixAA.MatrixRows; i++)
                 for (int j = 0; j < matrixAA.MatrixCols; j++)
                 {
                     matrixDB[i, j] = matrixAA[i, j];
                 }
-                    
+
             double detA = 0;
 
             try
@@ -195,14 +194,58 @@ namespace Matrix_Calculator
                     for (int n = 0; n < matrixAA.MatrixRows; n++)
                     {
                         double p = 1.0;
-                        if (n > 0)
+
+                        if (n == 0 && matrixDB[n, n] == 0)
+                        {
+                            int i = n;
+                            while (matrixDB[i, n] == 0)
+                            {
+                                if (i >= matrixAA.MatrixRows)
+                                {
+                                    return 0;
+                                }
+                                i++;
+                            }
+                            double[] temp = new double[matrixDB.MatrixCols];
+                            for (int j = 0; j < matrixDB.MatrixCols; j++)
+                            {
+                                temp[j] = Math.Pow((-1), (i - n)) * matrixDB[i, j];
+                                matrixDB[i, j] = matrixDB[n, j];
+                                matrixDB[n, j] = temp[j];
+                            }
+                        }
+                        else if (n > 0)
                         {
                             p = matrixDB[n - 1, n - 1];
+
+                            if (matrixTmp[n, n] == 0)
+                            {
+                                int i = n;
+                                while (matrixTmp[i, n] == 0)
+                                {
+                                    if (i >= matrixAA.MatrixRows)
+                                    {
+                                        return 0;
+                                    }
+                                    i++;
+                                    if (i >= matrixAA.MatrixRows)
+                                    {
+                                        return 0;
+                                    }
+                                }
+                                double[] temp = new double[matrixDB.MatrixCols];
+                                for (int j = 0; j < matrixDB.MatrixCols; j++)
+                                {
+                                    temp[j] = Math.Pow((-1), (i - n)) * matrixTmp[i, j];
+                                    matrixTmp[i, j] = matrixTmp[n, j];
+                                    matrixTmp[n, j] = temp[j];
+                                }
+                            }
+
                             for (int i = 0; i < matrixAA.MatrixRows; i++)
                                 for (int j = 0; j < matrixAA.MatrixCols; j++)
                                 {
                                     matrixDB[i, j] = matrixTmp[i, j];
-                                    matrixIdentity[i, j] = matrixIdentityTmp[i, j];
                                 }
                         }
 
@@ -213,7 +256,6 @@ namespace Matrix_Calculator
                                 for (int j = 0; j < matrixAA.MatrixCols; j++)
                                 {
                                     matrixTmp[i, j] = matrixDB[i, j];
-                                    matrixIdentityTmp[i, j] = matrixIdentity[i, j];
                                 }
                             }
                             else
@@ -221,16 +263,10 @@ namespace Matrix_Calculator
                                 for (int j = 0; j < matrixAA.MatrixCols; j++)
                                 {
                                     matrixTmp[i, j] = (matrixDB[n, n] * matrixDB[i, j] - matrixDB[i, n] * matrixDB[n, j]) / p;
-                                    matrixIdentityTmp[i, j] = (matrixDB[n, n] * matrixIdentity[i, j] - matrixDB[i, n] * matrixIdentity[n, j]) / p;
                                 }
                             }
                         }
                     }
-                    for (int i = 0; i < matrixAA.MatrixRows; i++)
-                        for (int j = 0; j < matrixAA.MatrixCols; j++)
-                        {
-                            matrixIdentity[i, j] = matrixIdentityTmp[i, j];
-                        }
                     detA = matrixTmp[matrixTmp.MatrixRows - 1, matrixTmp.MatrixCols - 1];
                     return detA;
                 }
@@ -251,43 +287,40 @@ namespace Matrix_Calculator
             Matrix matrixAlgebraicComplements = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols);
             Matrix matrixTemp = new Matrix(matrixAA.MatrixRows - 1, matrixAA.MatrixCols - 1);
             Matrix matrixACT = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols);
-            Matrix matrixIdentity = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols, matrixAA.MatrixName);
             try
             {
                 if (matrixAA.MatrixRows == matrixAA.MatrixCols)
                 {
-                    for (int i = 0; i < matrixAA.MatrixRows; i++)
-                        matrixIdentity[i, i] = 1;
-                    double detA = determinantBareiss(matrixAA, matrixIdentity);
+                    double detA = determinantBareiss(matrixAA);
                     if (detA != 0)
                     {
                         Console.WriteLine(detA.ToString());
-                        //for (int i = 0; i < matrixAA.MatrixRows; i++)
-                        //    for (int j = 0; j < matrixAA.MatrixCols; j++)
-                        //    {
-                        //        int k = 0;
-                        //        for (int m = 0; m < matrixAA.MatrixRows; m++)
-                        //        {
-                        //            if (m != i)
-                        //            {
-                        //                int l = 0;
-                        //                for (int n = 0; n < matrixAA.MatrixCols; n++)
-                        //                {
-                        //                    if (n != j)
-                        //                    {
-                        //                        matrixTemp[k, l++] = matrixAA[m, n];
-                        //                    }
-                        //                }
-                        //                k++;
-                        //            }
-                        //        }
-                        //        matrixAlgebraicComplements[i, j] = Math.Pow((-1), (i + 1 + j + 1)) * determinantBareiss(matrixTemp);
-                        //    }
-                        //matrixACT = Transpose(matrixAlgebraicComplements);
                         for (int i = 0; i < matrixAA.MatrixRows; i++)
                             for (int j = 0; j < matrixAA.MatrixCols; j++)
-                                matrixIdentity[i, j] = matrixIdentity[i, j] / detA;
-                        return matrixIdentity;
+                            {
+                                int k = 0;
+                                for (int m = 0; m < matrixAA.MatrixRows; m++)
+                                {
+                                    if (m != i)
+                                    {
+                                        int l = 0;
+                                        for (int n = 0; n < matrixAA.MatrixCols; n++)
+                                        {
+                                            if (n != j)
+                                            {
+                                                matrixTemp[k, l++] = matrixAA[m, n];
+                                            }
+                                        }
+                                        k++;
+                                    }
+                                }
+                                matrixAlgebraicComplements[i, j] = Math.Pow((-1), (i + 1 + j + 1)) * determinantBareiss(matrixTemp);
+                            }
+                        matrixACT = Transpose(matrixAlgebraicComplements);
+                        for (int i = 0; i < matrixAA.MatrixRows; i++)
+                            for (int j = 0; j < matrixAA.MatrixCols; j++)
+                                matrixACT[i, j] = matrixACT[i, j] / detA;
+                        return matrixACT;
                     }
                     else
                     {
