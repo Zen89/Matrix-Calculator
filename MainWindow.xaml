@@ -218,24 +218,47 @@
 
                             </DataGrid>
                         </Border>
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Center"  Margin="5">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" MinWidth="320" Margin="5">
                             <Button x:Name="btnTranspose" Content="Transponuj i zapisz" Margin="30,5,5,5" Click="btnTranspose_Click"/>
                             <Button x:Name="btnInvert" Content="Odwróć i zapisz" Margin="30,5,5,5" Click="btnInvert_Click"/>
-                            <DockPanel LastChildFill="True">
+                            <DockPanel LastChildFill="True" HorizontalAlignment="Left">
                                 <Button x:Name="btnRowSwitch" Content="Zamień wiersze" Margin="30,5,5,5" Click="btnRowSwitch_Click"/>
                                 <TextBox x:Name="tbFirstRow" Style="{StaticResource validationTextBoxStyle}" Margin="12,5,5,5"/>
                                 <Label Content="na" Margin="5"/>
                                 <TextBox x:Name="tbSecondRow" Style="{StaticResource validationTextBoxStyle}" />
                             </DockPanel>
-                            <DockPanel LastChildFill="True">
+                            <DockPanel LastChildFill="True" HorizontalAlignment="Left">
                                 <Button x:Name="btnColSwitch" Content="Zamień kolumny" Margin="30,5,5,5" Click="btnColSwitch_Click"/>
                                 <TextBox x:Name="tbFirstCol" Style="{StaticResource validationTextBoxStyle}" />
                                 <Label Content="na" Margin="5"/>
                                 <TextBox x:Name="tbSecondCol" Style="{StaticResource validationTextBoxStyle}" />
                             </DockPanel>
-                            <DockPanel LastChildFill="True">
+                            <DockPanel LastChildFill="True" HorizontalAlignment="Left">
                                 <Button x:Name="btnMultiByNum" Content="Pomnóż macierz przez liczbę" Margin="30,5,5,5" Click="btnMultiByNum_Click"/>
                                 <TextBox x:Name="tbMultiNum" Style="{StaticResource validationTextBoxStyle}" Margin="5,5,5,5"/>
+                            </DockPanel>
+                            <DockPanel LastChildFill="True" HorizontalAlignment="Left">
+                                <Button x:Name="btnCalcDeterminant" Content="Oblicz wyznacznik macierzy" Margin="30,5,5,5" Click="btnCalcDeterminant_Click" />
+                                <Label x:Name="lblDetText" Content="Wyznacznik = " Margin="5,5,5,0" Visibility="Hidden"/>
+                                <TextBlock x:Name="tbDeterminant" Text="" Margin="0,5,5,5" Padding="0,5,5,5"/>
+                            </DockPanel>
+                            <DockPanel LastChildFill="True" HorizontalAlignment="Left">
+                                <Button x:Name="btnRowAdd" Content="Dodaj wiersze" Margin="30,5,5,5" Click="btnRowAdd_Click"/>
+                                <Label Content="A + X * B" Margin="0,5,0,5"/>
+                                <TextBox x:Name="tbFirstRowAdd" Style="{StaticResource validationTextBoxStyle}" Margin="12,5,5,5"/>
+                                <Label Content="+" Margin="0,5"/>
+                                <TextBox x:Name="tbNumberRowAdd" Style="{StaticResource validationTextBoxStyle}" Text="1"/>
+                                <Label Content="*" Margin="0,5"/>
+                                <TextBox x:Name="tbSecondRowAdd" Style="{StaticResource validationTextBoxStyle}" />
+                            </DockPanel>
+                            <DockPanel LastChildFill="True" HorizontalAlignment="Left">
+                                <Button x:Name="btnColAdd" Content="Dodaj kolumny" Margin="30,5,5,5" Click="btnColAdd_Click"/>
+                                <Label Content="A + X * B" Margin="0,5,0,5"/>
+                                <TextBox x:Name="tbFirstColAdd" Style="{StaticResource validationTextBoxStyle}" />
+                                <Label Content="+" Margin="0,5"/>
+                                <TextBox x:Name="tbNumberColAdd" Style="{StaticResource validationTextBoxStyle}" Text="1"/>
+                                <Label Content="*" Margin="0,5"/>
+                                <TextBox x:Name="tbSecondColAdd" Style="{StaticResource validationTextBoxStyle}" />
                             </DockPanel>
                         </StackPanel>
                         <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">

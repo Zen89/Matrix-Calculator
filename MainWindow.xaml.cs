@@ -356,7 +356,7 @@ namespace Matrix_Calculator
                 }
                 else
                 {
-                    throw new Exception("Źle wprowadzony/e numer/y wierszy do zamiany!");
+                    throw new Exception("Źle wprowadzony/e numer/y kolumn do zamiany!");
                 }
             }
             catch (Exception ex)
@@ -385,6 +385,70 @@ namespace Matrix_Calculator
                 }
             }
                 
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnCalcDeterminant_Click(object sender, RoutedEventArgs e)
+        {
+            var matrix = cbMatrixAA.SelectedItem as Matrix;
+            double determinant = Matrix.DeterminantBareiss(matrix);
+            lblDetText.Visibility = Visibility.Visible;
+            tbDeterminant.Text = determinant.ToString();
+        }
+
+        private void btnRowAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var matrix = cbMatrixAA.SelectedItem as Matrix;
+            int firstRow = 0;
+            int secondRow = 0;
+            double multiplicator = 0;
+
+            try
+            {
+                if (int.TryParse(tbFirstRowAdd.Text, out firstRow) && int.TryParse(tbSecondRowAdd.Text, out secondRow) && double.TryParse(tbNumberRowAdd.Text, out multiplicator))
+                {
+                    firstRow--;
+                    secondRow--;
+                    matrix = Matrix.AdditionRow(matrix, firstRow, secondRow, multiplicator);
+                    DataTable dataTable = matrix.ToDataTable();
+                    gridMatrixAA.DataContext = dataTable.DefaultView;
+                }
+                else
+                {
+                    throw new Exception("Źle wprowadzony/e numer/y wierszy lub mnożnik!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnColAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var matrix = cbMatrixAA.SelectedItem as Matrix;
+            int firstCol = 0;
+            int secondCol = 0;
+            double multiplicator = 0;
+
+            try
+            {
+                if (int.TryParse(tbFirstColAdd.Text, out firstCol) && int.TryParse(tbSecondColAdd.Text, out secondCol) && double.TryParse(tbNumberColAdd.Text, out multiplicator))
+                {
+                    firstCol--;
+                    secondCol--;
+                    matrix = Matrix.AdditionCol(matrix, firstCol, secondCol, multiplicator);
+                    DataTable dataTable = matrix.ToDataTable();
+                    gridMatrixAA.DataContext = dataTable.DefaultView;
+                }
+                else
+                {
+                    throw new Exception("Źle wprowadzony/e numer/y kolumn lub mnożnik!");
+                }
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);

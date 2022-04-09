@@ -145,7 +145,7 @@ namespace Matrix_Calculator
             }
         }
 
-        public static double determinantBareiss(Matrix matrixAA)
+        public static double DeterminantBareiss(Matrix matrixAA)
         {
             Matrix matrixDB = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols, matrixAA.MatrixName);
             Matrix matrixTmp = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols, matrixAA.MatrixName);
@@ -326,7 +326,7 @@ namespace Matrix_Calculator
             {
                 if (matrixAA.MatrixRows == matrixAA.MatrixCols)
                 {
-                    double detA = determinantBareiss(matrixAA);
+                    double detA = DeterminantBareiss(matrixAA);
                     if (detA != 0)
                     {
                         Console.WriteLine(detA.ToString());
@@ -349,7 +349,7 @@ namespace Matrix_Calculator
                                         k++;
                                     }
                                 }
-                                matrixAlgebraicComplements[i, j] = Math.Pow((-1), (i + 1 + j + 1)) * determinantBareiss(matrixTemp);
+                                matrixAlgebraicComplements[i, j] = Math.Pow((-1), (i + 1 + j + 1)) * DeterminantBareiss(matrixTemp);
                             }
                         matrixACT = Transpose(matrixAlgebraicComplements);
                         for (int i = 0; i < matrixAA.MatrixRows; i++)
@@ -375,9 +375,23 @@ namespace Matrix_Calculator
 
         public static Matrix MultiplicationByNumber(Matrix matrix, double number)
         {
-            for(int i = 0; i < matrix.MatrixRows; i++)
-                for(int j = 0; j < matrix.MatrixCols; j++)
-                    matrix.MatrixBody[i , j] *= number;
+            for (int i = 0; i < matrix.MatrixRows; i++)
+                for (int j = 0; j < matrix.MatrixCols; j++)
+                    matrix.MatrixBody[i, j] *= number;
+            return matrix;
+        }
+
+        public static Matrix AdditionRow(Matrix matrix, int firstRow, int secondRow, double multiplicatorSecondRow)
+        {
+            for (int j = 0; j < matrix.MatrixCols; j++)
+                matrix.MatrixBody[firstRow, j] += multiplicatorSecondRow * matrix.MatrixBody[secondRow, j];
+            return matrix;
+        }
+
+        public static Matrix AdditionCol(Matrix matrix, int firstCol, int secondCol, double multiplicatorSecondCol)
+        {
+            for (int i = 0; i < matrix.MatrixRows; i++)
+                matrix.MatrixBody[i, firstCol] += multiplicatorSecondCol * matrix.MatrixBody[i, secondCol];
             return matrix;
         }
     }
