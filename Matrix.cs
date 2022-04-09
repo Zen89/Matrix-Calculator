@@ -372,5 +372,13 @@ namespace Matrix_Calculator
                 throw new Exception(ex.Message);
             }
         }
+
+        public static Matrix MultiplicationByNumber(Matrix matrix, double number)
+        {
+            for(int i = 0; i < matrix.MatrixRows; i++)
+                for(int j = 0; j < matrix.MatrixCols; j++)
+                    matrix.MatrixBody[i , j] *= number;
+            return matrix;
+        }
     }
 }

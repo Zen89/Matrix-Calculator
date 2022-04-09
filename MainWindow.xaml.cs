@@ -232,7 +232,7 @@ namespace Matrix_Calculator
                 DataTable dataTable = matrixC.ToDataTable();
                 gridMatrixC.DataContext = dataTable.DefaultView;
                 MatrixList.Add(matrixC);
-                if(matrixC.MatrixName == tbName.Text) tbName.Text = $"Matrix {MatrixList.Count}";
+                if (matrixC.MatrixName == tbName.Text) tbName.Text = $"Matrix {MatrixList.Count}";
             }
             catch (Exception ex)
             {
@@ -314,7 +314,6 @@ namespace Matrix_Calculator
         private void btnRowSwitch_Click(object sender, RoutedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;
-            string name = tbMatrixD.Text;
             int firstRow = 0;
             int secondRow = 0;
 
@@ -325,10 +324,8 @@ namespace Matrix_Calculator
                     firstRow--;
                     secondRow--;
                     matrix = Matrix.RowSwitch(matrix, firstRow, secondRow);
-                    matrix.MatrixName = name;
                     DataTable dataTable = matrix.ToDataTable();
-                    gridMatrixD.DataContext = dataTable.DefaultView;
-                    MatrixList.Add(matrix);
+                    gridMatrixAA.DataContext = dataTable.DefaultView;
                 }
                 else
                 {
@@ -344,7 +341,6 @@ namespace Matrix_Calculator
         private void btnColSwitch_Click(object sender, RoutedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;
-            string name = tbMatrixD.Text;
             int firstCol = 0;
             int secondCol = 0;
 
@@ -355,16 +351,40 @@ namespace Matrix_Calculator
                     firstCol--;
                     secondCol--;
                     matrix = Matrix.ColSwitch(matrix, firstCol, secondCol);
-                    matrix.MatrixName = name;
                     DataTable dataTable = matrix.ToDataTable();
-                    gridMatrixD.DataContext = dataTable.DefaultView;
-                    MatrixList.Add(matrix);
+                    gridMatrixAA.DataContext = dataTable.DefaultView;
                 }
                 else
                 {
                     throw new Exception("Źle wprowadzony/e numer/y wierszy do zamiany!");
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnMultiByNum_Click(object sender, RoutedEventArgs e)
+        {
+            var matrix = cbMatrixAA.SelectedItem as Matrix;
+            int number = 0;
+
+            try
+            {
+                if(tbMultiNum.Text != null)
+                {
+                    int.TryParse(tbMultiNum.Text, out number);
+                    matrix = Matrix.MultiplicationByNumber(matrix, number);
+                    DataTable dataTable = matrix.ToDataTable();
+                    gridMatrixAA.DataContext = dataTable.DefaultView;
+                }
+                else
+                {
+                    throw new Exception("Brak liczby do przemnożenia macierzy!");
+                }
+            }
+                
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);

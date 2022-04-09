@@ -223,7 +223,7 @@
                             <Button x:Name="btnInvert" Content="Odwróć i zapisz" Margin="30,5,5,5" Click="btnInvert_Click"/>
                             <DockPanel LastChildFill="True">
                                 <Button x:Name="btnRowSwitch" Content="Zamień wiersze" Margin="30,5,5,5" Click="btnRowSwitch_Click"/>
-                                <TextBox x:Name="tbFirstRow" Style="{StaticResource validationTextBoxStyle}" />
+                                <TextBox x:Name="tbFirstRow" Style="{StaticResource validationTextBoxStyle}" Margin="12,5,5,5"/>
                                 <Label Content="na" Margin="5"/>
                                 <TextBox x:Name="tbSecondRow" Style="{StaticResource validationTextBoxStyle}" />
                             </DockPanel>
@@ -232,6 +232,10 @@
                                 <TextBox x:Name="tbFirstCol" Style="{StaticResource validationTextBoxStyle}" />
                                 <Label Content="na" Margin="5"/>
                                 <TextBox x:Name="tbSecondCol" Style="{StaticResource validationTextBoxStyle}" />
+                            </DockPanel>
+                            <DockPanel LastChildFill="True">
+                                <Button x:Name="btnMultiByNum" Content="Pomnóż macierz przez liczbę" Margin="30,5,5,5" Click="btnMultiByNum_Click"/>
+                                <TextBox x:Name="tbMultiNum" Style="{StaticResource validationTextBoxStyle}" Margin="5,5,5,5"/>
                             </DockPanel>
                         </StackPanel>
                         <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
