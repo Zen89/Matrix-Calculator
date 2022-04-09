@@ -310,5 +310,65 @@ namespace Matrix_Calculator
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnRowSwitch_Click(object sender, RoutedEventArgs e)
+        {
+            var matrix = cbMatrixAA.SelectedItem as Matrix;
+            string name = tbMatrixD.Text;
+            int firstRow = 0;
+            int secondRow = 0;
+
+            try
+            {
+                if (int.TryParse(tbFirstRow.Text, out firstRow) && int.TryParse(tbSecondRow.Text, out secondRow))
+                {
+                    firstRow--;
+                    secondRow--;
+                    matrix = Matrix.RowSwitch(matrix, firstRow, secondRow);
+                    matrix.MatrixName = name;
+                    DataTable dataTable = matrix.ToDataTable();
+                    gridMatrixD.DataContext = dataTable.DefaultView;
+                    MatrixList.Add(matrix);
+                }
+                else
+                {
+                    throw new Exception("Źle wprowadzony/e numer/y wierszy do zamiany!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnColSwitch_Click(object sender, RoutedEventArgs e)
+        {
+            var matrix = cbMatrixAA.SelectedItem as Matrix;
+            string name = tbMatrixD.Text;
+            int firstCol = 0;
+            int secondCol = 0;
+
+            try
+            {
+                if (int.TryParse(tbFirstCol.Text, out firstCol) && int.TryParse(tbSecondCol.Text, out secondCol))
+                {
+                    firstCol--;
+                    secondCol--;
+                    matrix = Matrix.ColSwitch(matrix, firstCol, secondCol);
+                    matrix.MatrixName = name;
+                    DataTable dataTable = matrix.ToDataTable();
+                    gridMatrixD.DataContext = dataTable.DefaultView;
+                    MatrixList.Add(matrix);
+                }
+                else
+                {
+                    throw new Exception("Źle wprowadzony/e numer/y wierszy do zamiany!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

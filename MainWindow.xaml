@@ -221,6 +221,18 @@
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center"  Margin="5">
                             <Button x:Name="btnTranspose" Content="Transponuj i zapisz" Margin="30,5,5,5" Click="btnTranspose_Click"/>
                             <Button x:Name="btnInvert" Content="Odwróć i zapisz" Margin="30,5,5,5" Click="btnInvert_Click"/>
+                            <DockPanel LastChildFill="True">
+                                <Button x:Name="btnRowSwitch" Content="Zamień wiersze" Margin="30,5,5,5" Click="btnRowSwitch_Click"/>
+                                <TextBox x:Name="tbFirstRow" Style="{StaticResource validationTextBoxStyle}" />
+                                <Label Content="na" Margin="5"/>
+                                <TextBox x:Name="tbSecondRow" Style="{StaticResource validationTextBoxStyle}" />
+                            </DockPanel>
+                            <DockPanel LastChildFill="True">
+                                <Button x:Name="btnColSwitch" Content="Zamień kolumny" Margin="30,5,5,5" Click="btnColSwitch_Click"/>
+                                <TextBox x:Name="tbFirstCol" Style="{StaticResource validationTextBoxStyle}" />
+                                <Label Content="na" Margin="5"/>
+                                <TextBox x:Name="tbSecondCol" Style="{StaticResource validationTextBoxStyle}" />
+                            </DockPanel>
                         </StackPanel>
                         <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
                             <DataGrid x:Name="gridMatrixD" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">

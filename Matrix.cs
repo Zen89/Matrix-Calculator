@@ -200,11 +200,11 @@ namespace Matrix_Calculator
                             int i = n;
                             while (matrixDB[i, n] == 0)
                             {
-                                if (i >= matrixAA.MatrixRows)
+                                i++;
+                                if (i >= matrixDB.MatrixRows)
                                 {
                                     return 0;
                                 }
-                                i++;
                             }
                             double[] temp = new double[matrixDB.MatrixCols];
                             for (int j = 0; j < matrixDB.MatrixCols; j++)
@@ -223,12 +223,8 @@ namespace Matrix_Calculator
                                 int i = n;
                                 while (matrixTmp[i, n] == 0)
                                 {
-                                    if (i >= matrixAA.MatrixRows)
-                                    {
-                                        return 0;
-                                    }
                                     i++;
-                                    if (i >= matrixAA.MatrixRows)
+                                    if (i >= matrixDB.MatrixRows)
                                     {
                                         return 0;
                                     }
@@ -279,6 +275,45 @@ namespace Matrix_Calculator
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public static Matrix RowSwitch(Matrix matrix, int firstRow, int secondRow)
+        {
+            double[] temp = new double[matrix.MatrixCols];
+            if (firstRow >= 0 && secondRow >= 0 && firstRow < matrix.MatrixRows && secondRow < matrix.MatrixRows)
+            {
+
+                for (int j = 0; j < matrix.MatrixCols; j++)
+                {
+                    temp[j] = Math.Pow((-1), Math.Abs(firstRow - secondRow)) * matrix[firstRow, j];
+                    matrix[firstRow, j] = matrix[secondRow, j];
+                    matrix[secondRow, j] = temp[j];
+                }
+            }
+            else
+            {
+                throw new Exception("Błędny/e numer/y wierszy do zamiany!");
+            }
+            return matrix;
+        }
+
+        public static Matrix ColSwitch(Matrix matrix, int firstCol, int secondCol)
+        {
+            double[] temp = new double[matrix.MatrixRows];
+            if (firstCol >= 0 && secondCol >= 0 && firstCol < matrix.MatrixCols && secondCol < matrix.MatrixCols)
+            {
+                for (int j = 0; j < matrix.MatrixRows; j++)
+                {
+                    temp[j] = Math.Pow((-1), Math.Abs(firstCol - secondCol)) * matrix[j, firstCol];
+                    matrix[j, firstCol] = matrix[j, secondCol];
+                    matrix[j, secondCol] = temp[j];
+                }
+            }
+            else
+            {
+                throw new Exception("Błędny/e numer/y kolumn do zamiany!");
+            }
+            return matrix;
         }
 
         public static Matrix Invert(Matrix matrixAA)
