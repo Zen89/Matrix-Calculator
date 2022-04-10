@@ -113,6 +113,7 @@
   <ItemGroup>
     <Compile Include="Matrix.cs" />
     <Compile Include="MatrixExtensions.cs" />
+    <Compile Include="Permutations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

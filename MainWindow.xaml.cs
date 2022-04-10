@@ -457,12 +457,14 @@ namespace Matrix_Calculator
 
         private void btnCalcMatrixRow_Click(object sender, RoutedEventArgs e)
         {
-            int[] sele = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
-            for(int k = 0; k < sele.Length; k++)
-            {
-                int[] tablica = new int[sele.Length - k];
+            var matrix = cbMatrixAA.SelectedItem as Matrix;
+            Matrix matrixTmp = new Matrix(matrix.MatrixRows, matrix.MatrixCols);
+            int matrixRow = Matrix.MatrixRow(matrix, out matrixTmp);
+            lblMRowText.Visibility = Visibility.Visible;
+            tbMatrixRow.Text = matrixRow.ToString();
+            DataTable dataTable = matrixTmp.ToDataTable();
+            gridMatrixD.DataContext = dataTable.DefaultView;
 
-            }
         }
     }
 }

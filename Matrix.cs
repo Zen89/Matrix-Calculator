@@ -395,39 +395,50 @@ namespace Matrix_Calculator
             return matrix;
         }
 
-        public static int MatrixRow(Matrix matrix)
+        public static int MatrixRow(Matrix matrix, out Matrix matrixOut)
         {
-            int matrixRow = 0;
             int row = matrix.MatrixRows;
             int col = matrix.MatrixCols;
-
-            if(matrix.MatrixRows == matrix.MatrixCols)
+            int smallerDim = Math.Min(row, col);
+            try
             {
-                if(DeterminantBareiss(matrix) != 0) return row;
-                else
+                for (int k = 0; k < smallerDim; k++)
                 {
-                    for(int k = 1; k < row; k++)
-                        for(int i = 0; i < row; i++)
-                            for(int j = 0; j < col; j++)
+                    IEnumerable<IEnumerable<int>> resultR = Permutations.GetKCombs(Enumerable.Range(0, row), smallerDim - k);
+                    IEnumerable<IEnumerable<int>> resultC = Permutations.GetKCombs(Enumerable.Range(0, col), smallerDim - k);
+
+                    int[] tablicaR = new int[smallerDim - k];
+                    int[] tablicaC = new int[smallerDim - k];
+                    foreach (var item2 in resultC)
+                        foreach (var item in resultR)
+                        {
+                            int r = 0;
+                            int c = 0;
+
+                            foreach (var x in item)
+                                tablicaR[r++] = x;
+                            foreach (var x in item2)
+                                tablicaC[c++] = x;
+                            Matrix matrixTmp = new Matrix(smallerDim - k, smallerDim - k);
+                            for (int i = 0; i < smallerDim - k; i++)
+                                for (int j = 0; j < smallerDim - k; j++)
+                                {
+                                    matrixTmp.MatrixBody[i, j] = matrix.MatrixBody[tablicaR[i], tablicaC[j]];
+                                }
+                            if (Matrix.DeterminantBareiss(matrixTmp) != 0)
                             {
-                                Matrix matrixTemp = new Matrix(row-k, col-k, "MatrixTemp");
-
-                                for(int m = 0,  p = 0; m < row-k; m++, p++)
-                                    for(int n = 0, r = 0; n < col-k; n++, r++)
-                                    {
-                                        if (p == i) p++;
-                                        if (r == j) r++;
-                                        matrixTemp.MatrixBody[m, n] = matrix.MatrixBody[p, r];
-                                    }
-                                if (DeterminantBareiss(matrixTemp) != 0) return matrixTemp.MatrixRows;
+                                matrixOut = matrixTmp;
+                                return matrixTmp.MatrixRows;
                             }
-
+                        }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception("Liczenie rzędu macierzy niekwadratowych jeszcze nie jest obsługiwane!");
+                throw new Exception(ex.Message);
             }
+            matrixOut = matrix;
+            return 1;
         }
     }
 }
