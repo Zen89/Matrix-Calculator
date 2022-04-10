@@ -454,5 +454,15 @@ namespace Matrix_Calculator
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnCalcMatrixRow_Click(object sender, RoutedEventArgs e)
+        {
+            int[] sele = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+            for(int k = 0; k < sele.Length; k++)
+            {
+                int[] tablica = new int[sele.Length - k];
+
+            }
+        }
     }
 }

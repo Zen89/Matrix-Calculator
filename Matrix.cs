@@ -394,5 +394,40 @@ namespace Matrix_Calculator
                 matrix.MatrixBody[i, firstCol] += multiplicatorSecondCol * matrix.MatrixBody[i, secondCol];
             return matrix;
         }
+
+        public static int MatrixRow(Matrix matrix)
+        {
+            int matrixRow = 0;
+            int row = matrix.MatrixRows;
+            int col = matrix.MatrixCols;
+
+            if(matrix.MatrixRows == matrix.MatrixCols)
+            {
+                if(DeterminantBareiss(matrix) != 0) return row;
+                else
+                {
+                    for(int k = 1; k < row; k++)
+                        for(int i = 0; i < row; i++)
+                            for(int j = 0; j < col; j++)
+                            {
+                                Matrix matrixTemp = new Matrix(row-k, col-k, "MatrixTemp");
+
+                                for(int m = 0,  p = 0; m < row-k; m++, p++)
+                                    for(int n = 0, r = 0; n < col-k; n++, r++)
+                                    {
+                                        if (p == i) p++;
+                                        if (r == j) r++;
+                                        matrixTemp.MatrixBody[m, n] = matrix.MatrixBody[p, r];
+                                    }
+                                if (DeterminantBareiss(matrixTemp) != 0) return matrixTemp.MatrixRows;
+                            }
+
+                }
+            }
+            else
+            {
+                throw new Exception("Liczenie rzędu macierzy niekwadratowych jeszcze nie jest obsługiwane!");
+            }
+        }
     }
 }
