@@ -322,6 +322,7 @@ namespace Matrix_Calculator
             Matrix matrixAlgebraicComplements = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols);
             Matrix matrixTemp = new Matrix(matrixAA.MatrixRows - 1, matrixAA.MatrixCols - 1);
             Matrix matrixACT = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols);
+
             try
             {
                 if (matrixAA.MatrixRows == matrixAA.MatrixCols)
@@ -443,8 +444,20 @@ namespace Matrix_Calculator
             int row = matrix.MatrixRows;
             int col = matrix.MatrixCols;
             int smallerDim = Math.Min(row, col);
+            int g = 0;
+            int h = 0;
             try
             {
+                for (int i = 0; i < matrix.MatrixRows; i++)
+                    for (int j = 0; j < matrix.MatrixCols; j++)
+                    {
+                        if (matrix.MatrixBody[i, j] == 0) g++;
+                        if (matrix.MatrixBody[i, j] == matrix.MatrixBody[0, 0]) h++;
+                    }
+                matrixOut = matrix;
+                if (g == row * col) return 0;
+                if (h == row * col) return 1;
+
                 for (int k = 0; k < smallerDim; k++)
                 {
                     IEnumerable<IEnumerable<int>> resultR = Permutations.GetKCombs(Enumerable.Range(0, row), smallerDim - k);
