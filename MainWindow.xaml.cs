@@ -164,6 +164,7 @@ namespace Matrix_Calculator
         private void btnLoadMatrixes_Click(object sender, RoutedEventArgs e)
         {
             FileSupport.LoadMatrixesFromFile(MatrixList);
+            tbName.Text = $"Matrix {MatrixList.Count}";
         }
 
         private void tbRows_PreviewTextInput(object sender, TextCompositionEventArgs e)
