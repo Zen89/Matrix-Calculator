@@ -45,7 +45,7 @@ namespace Matrix_Calculator
                 sb.Append("\r");
                 for (int j = 0; j < MatrixBody.GetLength(1); j++)
                 {
-                    sb.Append($"{MatrixBody[i, j]} ".PadLeft(4));
+                    sb.Append($"{MatrixBody[i, j]:N2} ".PadLeft(4));
                 }
             }
             return sb.ToString();

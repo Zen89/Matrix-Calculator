@@ -142,69 +142,7 @@
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Operacje +, -, *" Foreground="Black" FontWeight="Bold" Padding="5,0"/>
-                    </StackPanel>
-                </TabItem.Header>
-                <Grid Margin="5" Background="{StaticResource LightGrayBlueGradientBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
-                        <WrapPanel Grid.Row="0" Grid.Column="0" Margin="5">
-                            <Label Content="Aby dodać, odjąć lub przemnożyć macierze, wybierz macierze A i B o właściwych rozmiarach:" Margin="5,5,0,5" FontWeight="Bold"/>
-                            <Label Content="Macierz A" Margin="0,5,0,5"/>
-                            <ComboBox Name="cbMatrixA" Margin="5" Width="80" Height="25" ItemsSource="{Binding MatrixList}" SelectionChanged="cbMatrixA_SelectionChanged">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Height="20" Text="{Binding MatrixName}"/>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <Label Content="+/- Macierz B" Margin="0,5,0,5"/>
-                            <ComboBox Name="cbMatrixB" Margin="5" Width="80" Height="25" ItemsSource="{Binding MatrixList}" SelectionChanged="cbMatrixB_SelectionChanged">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Height="20" Text="{Binding MatrixName}"/>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <Label Content="Nazwa macierzy C:" Margin="0,5,0,5"/>
-                            <TextBox x:Name="tbMatrixC" Margin="5" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                        </WrapPanel>
-                    </Border>
-                    <DockPanel LastChildFill="True" Grid.Row="1" Grid.Column="0" Margin="5">
-                        <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
-                            <DataGrid x:Name="gridMatrixA" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
-
-                            </DataGrid>
-                        </Border>
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Center"  Margin="5">
-                            <RadioButton Content="+" IsChecked="True" Margin="5" Name="rbPlus"/>
-                            <RadioButton Content="-" Margin="5" Name="rbMinus"/>
-                            <RadioButton Content="*" Margin="5" Name="rbMulti"/>
-                        </StackPanel>
-                        <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
-                            <DataGrid x:Name="gridMatrixB" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
-
-                            </DataGrid>
-                        </Border>
-                        <Button x:Name="btnCalculate" Content="Wykonaj i zapisz" Margin="30,5,5,5" Click="btnCalculate_Click"/>
-                            <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
-                            <DataGrid x:Name="gridMatrixC" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
-
-                            </DataGrid>
-                        </Border>
-                    </DockPanel>
-                </Grid>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Operacje T, ^-1" Foreground="Black" FontWeight="Bold" Padding="5,0"/>
+                        <TextBlock Text="Operacje na jednej macierzy" Foreground="Black" FontWeight="Bold" Padding="5,0"/>
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Margin="5" Background="{StaticResource LightGrayBlueGradientBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -233,7 +171,6 @@
                     <DockPanel LastChildFill="True" Grid.Row="1" Grid.Column="0" Margin="5">
                         <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
                             <DataGrid x:Name="gridMatrixAA" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
-
                             </DataGrid>
                         </Border>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" MinWidth="320" Margin="5">
@@ -241,22 +178,6 @@
                             <Button x:Name="btnInvert" Content="Odwróć macierz i zapisz" Margin="30,5,5,5" Click="btnInvert_Click"/>
                             <Button x:Name="btnAlgebraicComplements" Content="Stwórz macierz dopełnień algebraicznych i zapisz" Margin="30,5,5,5" Click="btnAlgebraicComplements_Click"/>
                             <Button x:Name="btnAttached" Content="Stwórz macierz dołączoną i zapisz" Margin="30,5,5,5" Click="btnAttached_Click"/>
-                            <DockPanel LastChildFill="True" HorizontalAlignment="Left">
-                                <Button x:Name="btnRowSwitch" Content="Zamień wiersze" Margin="30,5,5,5" Click="btnRowSwitch_Click"/>
-                                <TextBox x:Name="tbFirstRow" Style="{StaticResource validationTextBoxStyle}" Margin="12,5,5,5"/>
-                                <Label Content="z" Margin="5"/>
-                                <TextBox x:Name="tbSecondRow" Style="{StaticResource validationTextBoxStyle}" />
-                            </DockPanel>
-                            <DockPanel LastChildFill="True" HorizontalAlignment="Left">
-                                <Button x:Name="btnColSwitch" Content="Zamień kolumny" Margin="30,5,5,5" Click="btnColSwitch_Click"/>
-                                <TextBox x:Name="tbFirstCol" Style="{StaticResource validationTextBoxStyle}" />
-                                <Label Content="z" Margin="5"/>
-                                <TextBox x:Name="tbSecondCol" Style="{StaticResource validationTextBoxStyle}" />
-                            </DockPanel>
-                            <DockPanel LastChildFill="True" HorizontalAlignment="Left">
-                                <Button x:Name="btnMultiByNum" Content="Pomnóż macierz przez liczbę" Margin="30,5,5,5" Click="btnMultiByNum_Click"/>
-                                <TextBox x:Name="tbMultiNum" Style="{StaticResource validationTextBoxStyle}" Margin="5,5,5,5"/>
-                            </DockPanel>
                             <DockPanel LastChildFill="True" HorizontalAlignment="Left">
                                 <Button x:Name="btnRowAdd" Content="Dodaj wiersze" Margin="30,5,5,5" Click="btnRowAdd_Click"/>
                                 <Label Content="A + X * B" Margin="0,5,0,5"/>
@@ -276,6 +197,22 @@
                                 <TextBox x:Name="tbSecondColAdd" Style="{StaticResource validationTextBoxStyle}" />
                             </DockPanel>
                             <DockPanel LastChildFill="True" HorizontalAlignment="Left">
+                                <Button x:Name="btnRowSwitch" Content="Zamień wiersze" Margin="30,5,5,5" Click="btnRowSwitch_Click"/>
+                                <TextBox x:Name="tbFirstRow" Style="{StaticResource validationTextBoxStyle}" Margin="12,5,5,5"/>
+                                <Label Content="z" Margin="5"/>
+                                <TextBox x:Name="tbSecondRow" Style="{StaticResource validationTextBoxStyle}" />
+                            </DockPanel>
+                            <DockPanel LastChildFill="True" HorizontalAlignment="Left">
+                                <Button x:Name="btnColSwitch" Content="Zamień kolumny" Margin="30,5,5,5" Click="btnColSwitch_Click"/>
+                                <TextBox x:Name="tbFirstCol" Style="{StaticResource validationTextBoxStyle}" />
+                                <Label Content="z" Margin="5"/>
+                                <TextBox x:Name="tbSecondCol" Style="{StaticResource validationTextBoxStyle}" />
+                            </DockPanel>
+                            <DockPanel LastChildFill="True" HorizontalAlignment="Left">
+                                <Button x:Name="btnMultiByNum" Content="Pomnóż macierz przez liczbę" Margin="30,5,5,5" Click="btnMultiByNum_Click"/>
+                                <TextBox x:Name="tbMultiNum" Style="{StaticResource validationTextBoxStyle}" Margin="5,5,5,5"/>
+                            </DockPanel>
+                            <DockPanel LastChildFill="True" HorizontalAlignment="Left">
                                 <Button x:Name="btnCalcDeterminant" Content="Oblicz wyznacznik macierzy" Margin="30,5,5,5" Click="btnCalcDeterminant_Click" />
                                 <Label x:Name="lblDetText" Content="Wyznacznik = " Margin="5,5,5,0" Visibility="Hidden"/>
                                 <TextBlock x:Name="tbDeterminant" Text="" Margin="0,5,5,5" Padding="0,5,5,5"/>
@@ -287,7 +224,68 @@
                             </DockPanel>
                         </StackPanel>
                         <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
-                            <DataGrid x:Name="gridMatrixD" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
+                            <DataGrid x:Name="gridMatrixD" Margin="5" ItemsSource="{Binding StringFormat=N2}" ItemStringFormat="{}{0:#}">
+                            </DataGrid>
+                        </Border>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Operacje na dwóch macierzach" Foreground="Black" FontWeight="Bold" Padding="5,0"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Margin="5" Background="{StaticResource LightGrayBlueGradientBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
+                        <WrapPanel Grid.Row="0" Grid.Column="0" Margin="5">
+                            <Label Content="Aby dodać, odjąć lub przemnożyć macierze, wybierz macierze A i B o właściwych rozmiarach:" Margin="5,5,0,5" FontWeight="Bold"/>
+                            <Label Content="Macierz A" Margin="0,5,0,5"/>
+                            <ComboBox Name="cbMatrixA" Margin="5" Width="80" Height="25" ItemsSource="{Binding MatrixList}" SelectionChanged="cbMatrixA_SelectionChanged">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Height="20" Text="{Binding MatrixName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Label Content="+/-/* Macierz B" Margin="0,5,0,5"/>
+                            <ComboBox Name="cbMatrixB" Margin="5" Width="80" Height="25" ItemsSource="{Binding MatrixList}" SelectionChanged="cbMatrixB_SelectionChanged">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Height="20" Text="{Binding MatrixName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Label Content="Nazwa macierzy C:" Margin="0,5,0,5"/>
+                            <TextBox x:Name="tbMatrixC" Margin="5" Style="{StaticResource validationTextBoxStyle}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        </WrapPanel>
+                    </Border>
+                    <DockPanel LastChildFill="True" Grid.Row="1" Grid.Column="0" Margin="5">
+                        <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
+                            <DataGrid x:Name="gridMatrixA" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
+
+                            </DataGrid>
+                        </Border>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center"  Margin="5">
+                            <RadioButton Content="+" IsChecked="True" Margin="5" Name="rbPlus"/>
+                            <RadioButton Content="-" Margin="5" Name="rbMinus"/>
+                            <RadioButton Content="*" Margin="5" Name="rbMulti"/>
+                        </StackPanel>
+                        <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
+                            <DataGrid x:Name="gridMatrixB" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
+
+                            </DataGrid>
+                        </Border>
+                        <Button x:Name="btnCalculate" Content="Wykonaj i zapisz" Margin="30,5,5,5" Click="btnCalculate_Click"/>
+                        <Border HorizontalAlignment="Stretch" Width="280" VerticalAlignment="Stretch" BorderBrush="Black" BorderThickness="2">
+                            <DataGrid x:Name="gridMatrixC" Margin="5" ItemsSource="{Binding}" ItemStringFormat="{}{0:#}">
 
                             </DataGrid>
                         </Border>

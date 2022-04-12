@@ -304,6 +304,7 @@ namespace Matrix_Calculator
                 gridMatrixD.DataContext = dataTable.DefaultView;
                 MatrixList.Add(matrixAT);
                 if (matrixAT.MatrixName == tbName.Text) tbName.Text = $"Matrix {MatrixList.Count}";
+                //Console.WriteLine(matrixAT.ToString());
             }
             catch (Exception ex)
             {
