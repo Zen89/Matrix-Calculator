@@ -311,6 +311,46 @@ namespace Matrix_Calculator
             }
         }
 
+        private void btnAlgebraicComplements_Click(object sender, RoutedEventArgs e)
+        {
+            var matrix = cbMatrixAA.SelectedItem as Matrix;
+            string name = tbMatrixD.Text;
+            Matrix matrixAD = new Matrix(matrix.MatrixCols, matrix.MatrixRows, name);
+            try
+            {
+                matrixAD = Matrix.AlgebraicComplements(matrix);
+                matrixAD.MatrixName = name;
+                DataTable dataTable = matrixAD.ToDataTable();
+                gridMatrixD.DataContext = dataTable.DefaultView;
+                MatrixList.Add(matrixAD);
+                if (matrixAD.MatrixName == tbName.Text) tbName.Text = $"Matrix {MatrixList.Count}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnAttached_Click(object sender, RoutedEventArgs e)
+        {
+            var matrix = cbMatrixAA.SelectedItem as Matrix;
+            string name = tbMatrixD.Text;
+            Matrix matrixADT = new Matrix(matrix.MatrixCols, matrix.MatrixRows, name);
+            try
+            {
+                matrixADT = Matrix.Transpose(Matrix.AlgebraicComplements(matrix));
+                matrixADT.MatrixName = name;
+                DataTable dataTable = matrixADT.ToDataTable();
+                gridMatrixD.DataContext = dataTable.DefaultView;
+                MatrixList.Add(matrixADT);
+                if (matrixADT.MatrixName == tbName.Text) tbName.Text = $"Matrix {MatrixList.Count}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void btnRowSwitch_Click(object sender, RoutedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;

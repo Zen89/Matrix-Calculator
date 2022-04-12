@@ -237,8 +237,10 @@
                             </DataGrid>
                         </Border>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" MinWidth="320" Margin="5">
-                            <Button x:Name="btnTranspose" Content="Transponuj i zapisz" Margin="30,5,5,5" Click="btnTranspose_Click"/>
-                            <Button x:Name="btnInvert" Content="Odwróć i zapisz" Margin="30,5,5,5" Click="btnInvert_Click"/>
+                            <Button x:Name="btnTranspose" Content="Transponuj macierz i zapisz" Margin="30,5,5,5" Click="btnTranspose_Click"/>
+                            <Button x:Name="btnInvert" Content="Odwróć macierz i zapisz" Margin="30,5,5,5" Click="btnInvert_Click"/>
+                            <Button x:Name="btnAlgebraicComplements" Content="Stwórz macierz dopełnień algebraicznych i zapisz" Margin="30,5,5,5" Click="btnAlgebraicComplements_Click"/>
+                            <Button x:Name="btnAttached" Content="Stwórz macierz dołączoną i zapisz" Margin="30,5,5,5" Click="btnAttached_Click"/>
                             <DockPanel LastChildFill="True" HorizontalAlignment="Left">
                                 <Button x:Name="btnRowSwitch" Content="Zamień wiersze" Margin="30,5,5,5" Click="btnRowSwitch_Click"/>
                                 <TextBox x:Name="tbFirstRow" Style="{StaticResource validationTextBoxStyle}" Margin="12,5,5,5"/>

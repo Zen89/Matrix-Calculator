@@ -373,6 +373,49 @@ namespace Matrix_Calculator
             }
         }
 
+        public static Matrix AlgebraicComplements(Matrix matrix)
+        {
+            Matrix matrixAlgebraicComplements = new Matrix(matrix.MatrixRows, matrix.MatrixCols);
+            Matrix matrixTemp = new Matrix(matrix.MatrixRows - 1, matrix.MatrixCols - 1);
+
+            try
+            {
+                if (matrix.MatrixRows == matrix.MatrixCols)
+                {
+                    for (int i = 0; i < matrix.MatrixRows; i++)
+                        for (int j = 0; j < matrix.MatrixCols; j++)
+                        {
+                            int k = 0;
+                            for (int m = 0; m < matrix.MatrixRows; m++)
+                            {
+                                if (m != i)
+                                {
+                                    int l = 0;
+                                    for (int n = 0; n < matrix.MatrixCols; n++)
+                                    {
+                                        if (n != j)
+                                        {
+                                            matrixTemp[k, l++] = matrix[m, n];
+                                        }
+                                    }
+                                    k++;
+                                }
+                            }
+                            matrixAlgebraicComplements[i, j] = Math.Pow((-1), (i + 1 + j + 1)) * DeterminantBareiss(matrixTemp);
+                        }
+                    return matrixAlgebraicComplements;
+                }
+                else
+                {
+                    throw new Exception("Liczba kolumn macierzy A nie jest równa liczbie wierszy!");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public static Matrix MultiplicationByNumber(Matrix matrix, double number)
         {
             for (int i = 0; i < matrix.MatrixRows; i++)
