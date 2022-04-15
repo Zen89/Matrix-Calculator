@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Matrix Calculator" Height="550" Width="1100" ResizeMode="NoResize">
     <Window.DataContext>
-        <local:MatrixTemp Name="Matrix 0" Row="2" Col="2"/>
+        <local:ElementsValidate Name="Matrix 0" Row="2" Col="2" FirstRow="1" SecondRow="1" MultiplicatorRow="1.0" FirstCol="1" SecondCol="1" MultiplicatorCol="1.0"/>
     </Window.DataContext>
     <Window.Resources>
         <LinearGradientBrush x:Key="DarkGrayBlueGradientBrush" StartPoint="0,1" EndPoint="1,0">
@@ -181,20 +181,20 @@
                             <DockPanel LastChildFill="True" HorizontalAlignment="Left">
                                 <Button x:Name="btnRowAdd" Content="Dodaj wiersze" Margin="30,5,5,5" Click="btnRowAdd_Click"/>
                                 <Label Content="A + X * B" Margin="0,5,0,5"/>
-                                <TextBox x:Name="tbFirstRowAdd" Style="{StaticResource validationTextBoxStyle}" Margin="12,5,5,5"/>
+                                <TextBox x:Name="tbFirstRowAdd" Style="{StaticResource validationTextBoxStyle}" Text="{Binding FirstRow, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}" Margin="12,5,5,5" PreviewTextInput="tbFirstRowAdd_PreviewTextInput"/>
                                 <Label Content="+" Margin="0,5"/>
-                                <TextBox x:Name="tbNumberRowAdd" Style="{StaticResource validationTextBoxStyle}" Text="1"/>
+                                <TextBox x:Name="tbNumberRowAdd" Style="{StaticResource validationTextBoxStyle}" Text="{Binding MultiplicatorRow, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F3}, ValidatesOnDataErrors=True}" PreviewTextInput="tbNumberRowAdd_PreviewTextInput"/>
                                 <Label Content="*" Margin="0,5"/>
-                                <TextBox x:Name="tbSecondRowAdd" Style="{StaticResource validationTextBoxStyle}" />
+                                <TextBox x:Name="tbSecondRowAdd" Style="{StaticResource validationTextBoxStyle}" Text="{Binding SecondRow, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}" PreviewTextInput="tbSecondRowAdd_PreviewTextInput"/>
                             </DockPanel>
                             <DockPanel LastChildFill="True" HorizontalAlignment="Left">
                                 <Button x:Name="btnColAdd" Content="Dodaj kolumny" Margin="30,5,5,5" Click="btnColAdd_Click"/>
                                 <Label Content="A + X * B" Margin="0,5,0,5"/>
-                                <TextBox x:Name="tbFirstColAdd" Style="{StaticResource validationTextBoxStyle}" />
+                                <TextBox x:Name="tbFirstColAdd" Style="{StaticResource validationTextBoxStyle}" Text="{Binding FirstCol, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}" Margin="6,5,5,5" PreviewTextInput="tbFirstColAdd_PreviewTextInput"/>
                                 <Label Content="+" Margin="0,5"/>
-                                <TextBox x:Name="tbNumberColAdd" Style="{StaticResource validationTextBoxStyle}" Text="1"/>
+                                <TextBox x:Name="tbNumberColAdd" Style="{StaticResource validationTextBoxStyle}" Text="{Binding MultiplicatorCol, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F3}, ValidatesOnDataErrors=True}" PreviewTextInput="tbNumberColAdd_PreviewTextInput"/>
                                 <Label Content="*" Margin="0,5"/>
-                                <TextBox x:Name="tbSecondColAdd" Style="{StaticResource validationTextBoxStyle}" />
+                                <TextBox x:Name="tbSecondColAdd" Style="{StaticResource validationTextBoxStyle}" Text="{Binding SecondCol, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}" PreviewTextInput="tbSecondColAdd_PreviewTextInput"/>
                             </DockPanel>
                             <DockPanel LastChildFill="True" HorizontalAlignment="Left">
                                 <Button x:Name="btnRowSwitch" Content="Zamień wiersze" Margin="30,5,5,5" Click="btnRowSwitch_Click"/>

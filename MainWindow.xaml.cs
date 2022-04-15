@@ -441,16 +441,34 @@ namespace Matrix_Calculator
             tbDeterminant.Text = determinant.ToString();
         }
 
+        private void tbFirstRowAdd_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+        }
+
+        private void tbSecondRowAdd_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+        }
+
+        private void tbNumberRowAdd_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, @"[^-0-9]+$");
+        }
+
         private void btnRowAdd_Click(object sender, RoutedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;
             int firstRow = 0;
             int secondRow = 0;
             double multiplicator = 0;
-
+            string swichDotwithComma = tbNumberRowAdd.Text.Replace('.', ',');
             try
             {
-                if (int.TryParse(tbFirstRowAdd.Text, out firstRow) && int.TryParse(tbSecondRowAdd.Text, out secondRow) && double.TryParse(tbNumberRowAdd.Text, out multiplicator))
+                if (int.TryParse(tbFirstRowAdd.Text, out firstRow) && int.TryParse(tbSecondRowAdd.Text, out secondRow) && double.TryParse(swichDotwithComma, out multiplicator))
                 {
                     firstRow--;
                     secondRow--;
@@ -469,16 +487,34 @@ namespace Matrix_Calculator
             }
         }
 
+        private void tbFirstColAdd_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+        }
+
+        private void tbSecondColAdd_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
+        }
+
+        private void tbNumberColAdd_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            e.Handled = Regex.IsMatch(e.Text, @"[^-0-9]+$");
+        }
+
         private void btnColAdd_Click(object sender, RoutedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;
             int firstCol = 0;
             int secondCol = 0;
             double multiplicator = 0;
-
+            string swichDotwithComma = tbNumberRowAdd.Text.Replace('.', ',');
             try
             {
-                if (int.TryParse(tbFirstColAdd.Text, out firstCol) && int.TryParse(tbSecondColAdd.Text, out secondCol) && double.TryParse(tbNumberColAdd.Text, out multiplicator))
+                if (int.TryParse(tbFirstColAdd.Text, out firstCol) && int.TryParse(tbSecondColAdd.Text, out secondCol) && double.TryParse(swichDotwithComma, out multiplicator))
                 {
                     firstCol--;
                     secondCol--;

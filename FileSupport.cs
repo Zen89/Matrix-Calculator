@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Matrix_Calculator
 {
@@ -122,12 +123,28 @@ namespace Matrix_Calculator
         }
     }
 
-    public class MatrixTemp : IDataErrorInfo
+    public class MatrixTemp
     {
         public string Name { get; set; }
         public int Row { get; set; }
         public int Col { get; set; }
         //public int Body { get; set; }
+
+        
+    }
+
+    public class ElementsValidate : IDataErrorInfo
+    {
+        public string Name { get; set; }
+        public int Row { get; set; }
+        public int Col { get; set; }
+        //public int Body { get; set; }
+        public int FirstRow { get; set; }
+        public int SecondRow { get; set; }
+        public double MultiplicatorRow { get; set; }
+        public int FirstCol { get; set; }
+        public int SecondCol { get; set; }
+        public double MultiplicatorCol { get; set; }
 
         //TODO replace the validation rules from IDataErrorInfo with INotifyDataErrorInfo
         public string Error

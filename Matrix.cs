@@ -318,59 +318,23 @@ namespace Matrix_Calculator
 
         public static Matrix Invert(Matrix matrixAA)
         {
-
             Matrix matrixAlgebraicComplements = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols);
             Matrix matrixTemp = new Matrix(matrixAA.MatrixRows - 1, matrixAA.MatrixCols - 1);
             Matrix matrixACT = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols);
 
-            try
+            double detA = DeterminantBareiss(matrixAA);
+            if (detA != 0)
             {
-                if (matrixAA.MatrixRows == matrixAA.MatrixCols)
-                {
-                    double detA = DeterminantBareiss(matrixAA);
-                    if (detA != 0)
-                    {
-                        Console.WriteLine(detA.ToString());
-                        for (int i = 0; i < matrixAA.MatrixRows; i++)
-                            for (int j = 0; j < matrixAA.MatrixCols; j++)
-                            {
-                                int k = 0;
-                                for (int m = 0; m < matrixAA.MatrixRows; m++)
-                                {
-                                    if (m != i)
-                                    {
-                                        int l = 0;
-                                        for (int n = 0; n < matrixAA.MatrixCols; n++)
-                                        {
-                                            if (n != j)
-                                            {
-                                                matrixTemp[k, l++] = matrixAA[m, n];
-                                            }
-                                        }
-                                        k++;
-                                    }
-                                }
-                                matrixAlgebraicComplements[i, j] = Math.Pow((-1), (i + 1 + j + 1)) * DeterminantBareiss(matrixTemp);
-                            }
-                        matrixACT = Transpose(matrixAlgebraicComplements);
-                        for (int i = 0; i < matrixAA.MatrixRows; i++)
-                            for (int j = 0; j < matrixAA.MatrixCols; j++)
-                                matrixACT[i, j] = matrixACT[i, j] / detA;
-                        return matrixACT;
-                    }
-                    else
-                    {
-                        throw new Exception("Wyznacznik macierzy równy 0, nie można odwrócić macierzy!");
-                    }
-                }
-                else
-                {
-                    throw new Exception("Liczba kolumn macierzy A nie jest równa liczbie wierszy!");
-                }
+                matrixAlgebraicComplements = AlgebraicComplements(matrixAA);
+                matrixACT = Transpose(matrixAlgebraicComplements);
+                for (int i = 0; i < matrixAA.MatrixRows; i++)
+                    for (int j = 0; j < matrixAA.MatrixCols; j++)
+                        matrixACT[i, j] = matrixACT[i, j] / detA;
+                return matrixACT;
             }
-            catch (Exception ex)
+            else
             {
-                throw new Exception(ex.Message);
+                throw new Exception("Wyznacznik macierzy równy 0, nie można odwrócić macierzy!");
             }
         }
 
