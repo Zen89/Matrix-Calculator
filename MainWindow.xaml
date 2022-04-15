@@ -198,15 +198,15 @@
                             </DockPanel>
                             <DockPanel LastChildFill="True" HorizontalAlignment="Left">
                                 <Button x:Name="btnRowSwitch" Content="Zamień wiersze" Margin="30,5,5,5" Click="btnRowSwitch_Click"/>
-                                <TextBox x:Name="tbFirstRow" Style="{StaticResource validationTextBoxStyle}" Margin="12,5,5,5"/>
+                                <TextBox x:Name="tbFirstRow" Style="{StaticResource validationTextBoxStyle}" Text="{Binding FirstRow, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}" Margin="12,5,5,5" PreviewTextInput="tbFirstRowAdd_PreviewTextInput"/>
                                 <Label Content="z" Margin="5"/>
-                                <TextBox x:Name="tbSecondRow" Style="{StaticResource validationTextBoxStyle}" />
+                                <TextBox x:Name="tbSecondRow" Style="{StaticResource validationTextBoxStyle}" Text="{Binding SecondRow, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}" PreviewTextInput="tbSecondRowAdd_PreviewTextInput"/>
                             </DockPanel>
                             <DockPanel LastChildFill="True" HorizontalAlignment="Left">
-                                <Button x:Name="btnColSwitch" Content="Zamień kolumny" Margin="30,5,5,5" Click="btnColSwitch_Click"/>
-                                <TextBox x:Name="tbFirstCol" Style="{StaticResource validationTextBoxStyle}" />
+                                <Button x:Name="btnColSwitch" Content="Zamień kolumny" Margin="30,5,5,5" Click="btnColSwitch_Click" />
+                                <TextBox x:Name="tbFirstCol" Style="{StaticResource validationTextBoxStyle}" Text="{Binding FirstCol, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}" PreviewTextInput="tbFirstColAdd_PreviewTextInput"/>
                                 <Label Content="z" Margin="5"/>
-                                <TextBox x:Name="tbSecondCol" Style="{StaticResource validationTextBoxStyle}" />
+                                <TextBox x:Name="tbSecondCol" Style="{StaticResource validationTextBoxStyle}" Text="{Binding SecondCol, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}, ValidatesOnDataErrors=True}" PreviewTextInput="tbSecondColAdd_PreviewTextInput"/>
                             </DockPanel>
                             <DockPanel LastChildFill="True" HorizontalAlignment="Left">
                                 <Button x:Name="btnMultiByNum" Content="Pomnóż macierz przez liczbę" Margin="30,5,5,5" Click="btnMultiByNum_Click"/>
