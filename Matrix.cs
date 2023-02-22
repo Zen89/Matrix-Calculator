@@ -7,13 +7,37 @@ using System.Threading.Tasks;
 
 namespace Matrix_Calculator
 {
+    /// <summary>
+    /// Represents a matrix object.
+    /// </summary>
     public class Matrix
     {
+        /// <summary>
+        /// Gets or sets the name of the matrix.
+        /// </summary>
         public string MatrixName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the body of the matrix.
+        /// </summary>
         public double[,] MatrixBody { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of rows of the matrix.
+        /// </summary>
         public int MatrixRows { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of columns of the matrix.
+        /// </summary>
         public int MatrixCols { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the Matrix class with the specified number of rows and columns, and a name.
+        /// </summary>
+        /// <param name="rows">The number of rows of the matrix.</param>
+        /// <param name="cols">The number of columns of the matrix.</param>
+        /// <param name="name">The name of the matrix. Default is "Matrix 0".</param>
         public Matrix(int rows, int cols, string name = "Matrix 0")
         {
             MatrixName = name;
@@ -30,12 +54,22 @@ namespace Matrix_Calculator
             MatrixCols = cols;
         }
 
+        /// <summary>
+        /// Gets or sets the value at the specified row and column in the matrix.
+        /// </summary>
+        /// <param name="i">The row index (0-based).</param>
+        /// <param name="j">The column index (0-based).</param>
+        /// <returns>The value at the specified row and column in the matrix.</returns>
         public double this[int i, int j]
         {
             get { return MatrixBody[i, j]; }
             set { MatrixBody[i, j] = value; }
         }
 
+        /// <summary>
+        /// Returns a string that represents the matrix in a human-readable format, with each element rounded to two decimal places.
+        /// </summary>
+        /// <returns>A string that represents the matrix in a human-readable format.</returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -51,6 +85,12 @@ namespace Matrix_Calculator
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Gets or sets the element at the specified row and column of the matrix.
+        /// </summary>
+        /// <param name="i">The row index of the element.</param>
+        /// <param name="j">The column index of the element.</param>
+        /// <returns>The value of the element at the specified row and column of the matrix.</returns>
         public static Matrix operator +(Matrix matrixA, Matrix matrixB)
         {
             Matrix matrixAplusB = new Matrix(matrixA.MatrixRows, matrixA.MatrixCols, "Matrix AB");
@@ -76,6 +116,12 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Subtracts one matrix from another and returns the resulting matrix.
+        /// </summary>
+        /// <param name="matrixA">The matrix to subtract from.</param>
+        /// <param name="matrixB">The matrix to subtract.</param>
+        /// <returns>The difference between the two matrices.</returns>
         public static Matrix operator -(Matrix matrixA, Matrix matrixB)
         {
             Matrix matrixAminusB = new Matrix(matrixA.MatrixRows, matrixA.MatrixCols, "Matrix AB");
@@ -101,6 +147,12 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Multiplies two matrices and returns the resulting matrix.
+        /// </summary>
+        /// <param name="matrixA">The first matrix to multiply.</param>
+        /// <param name="matrixB">The second matrix to multiply.</param>
+        /// <returns>The product of the two matrices.</returns>
         public static Matrix operator *(Matrix matrixA, Matrix matrixB)
         {
             Matrix matrixAmultiB = new Matrix(matrixA.MatrixRows, matrixB.MatrixCols, "MatrixAB");
@@ -127,6 +179,11 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Transposes the specified matrix and returns the resulting matrix.
+        /// </summary>
+        /// <param name="matrixAA">The matrix to transpose.</param>
+        /// <returns>The transpose of the matrix.</returns>
         public static Matrix Transpose(Matrix matrixAA)
         {
             Matrix matrixAT = new Matrix(matrixAA.MatrixCols, matrixAA.MatrixRows, $"{matrixAA.MatrixName}T");
@@ -145,6 +202,11 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Calculates the determinant of the specified matrix using the Bareiss algorithm.
+        /// </summary>
+        /// <param name="matrixAA">The matrix to calculate the determinant of.</param>
+        /// <returns>The determinant of the matrix.</returns>
         public static double DeterminantBareiss(Matrix matrixAA)
         {
             Matrix matrixDB = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols, matrixAA.MatrixName);
@@ -277,6 +339,14 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Switches two rows in a given matrix.
+        /// </summary>
+        /// <param name="matrix">The input matrix.</param>
+        /// <param name="firstRow">The index of the first row to be switched.</param>
+        /// <param name="secondRow">The index of the second row to be switched.</param>
+        /// <returns>The input matrix with the specified rows switched.</returns>
+        /// <exception cref="System.Exception">Thrown when the input matrix is null or when the row indices are out of range.</exception>
         public static Matrix RowSwitch(Matrix matrix, int firstRow, int secondRow)
         {
             if (matrix != null)
@@ -304,6 +374,14 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Switches two columns in a given matrix.
+        /// </summary>
+        /// <param name="matrix">The input matrix.</param>
+        /// <param name="firstCol">The index of the first column to be switched.</param>
+        /// <param name="secondCol">The index of the second column to be switched.</param>
+        /// <returns>The input matrix with the specified columns switched.</returns>
+        /// <exception cref="System.Exception">Thrown when the column indices are out of range.</exception>
         public static Matrix ColSwitch(Matrix matrix, int firstCol, int secondCol)
         {
             try
@@ -330,6 +408,12 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Inverts a given matrix using its algebraic complements.
+        /// </summary>
+        /// <param name="matrixAA">The input matrix to be inverted.</param>
+        /// <returns>The inverted input matrix.</returns>
+        /// <exception cref="System.Exception">Thrown when the determinant of the input matrix is zero.</exception>
         public static Matrix Invert(Matrix matrixAA)
         {
             Matrix matrixAlgebraicComplements = new Matrix(matrixAA.MatrixRows, matrixAA.MatrixCols);
@@ -352,6 +436,12 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Computes the matrix of algebraic complements for a given matrix.
+        /// </summary>
+        /// <param name="matrix">The input matrix.</param>
+        /// <returns>The matrix of algebraic complements for the input matrix.</returns>
+        /// <exception cref="System.Exception">Thrown when the input matrix is not square.</exception>
         public static Matrix AlgebraicComplements(Matrix matrix)
         {
             Matrix matrixAlgebraicComplements = new Matrix(matrix.MatrixRows, matrix.MatrixCols);
@@ -395,6 +485,12 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Multiplies a matrix by a scalar number.
+        /// </summary>
+        /// <param name="matrix">The matrix to be multiplied.</param>
+        /// <param name="number">The scalar number to multiply the matrix by.</param>
+        /// <returns>The resulting matrix after multiplication.</returns>
         public static Matrix MultiplicationByNumber(Matrix matrix, double number)
         {
             for (int i = 0; i < matrix.MatrixRows; i++)
@@ -403,6 +499,14 @@ namespace Matrix_Calculator
             return matrix;
         }
 
+        /// <summary>
+        /// Adds a multiple of one row to another row in the matrix.
+        /// </summary>
+        /// <param name="matrix">The matrix to perform the row addition on.</param>
+        /// <param name="firstRow">The index of the first row to add to.</param>
+        /// <param name="secondRow">The index of the second row to multiply and add to the first row.</param>
+        /// <param name="multiplicatorSecondRow">The scalar value to multiply the second row by before adding it to the first row.</param>
+        /// <returns>The resulting matrix after the row addition.</returns>
         public static Matrix AdditionRow(Matrix matrix, int firstRow, int secondRow, double multiplicatorSecondRow)
         {
             for (int j = 0; j < matrix.MatrixCols; j++)
@@ -410,6 +514,14 @@ namespace Matrix_Calculator
             return matrix;
         }
 
+        /// <summary>
+        /// Adds a multiple of one column to another column in the matrix.
+        /// </summary>
+        /// <param name="matrix">The matrix to perform the column addition on.</param>
+        /// <param name="firstCol">The index of the first column to add to.</param>
+        /// <param name="secondCol">The index of the second column to multiply and add to the first column.</param>
+        /// <param name="multiplicatorSecondCol">The scalar value to multiply the second column by before adding it to the first column.</param>
+        /// <returns>The resulting matrix after the column addition.</returns>
         public static Matrix AdditionCol(Matrix matrix, int firstCol, int secondCol, double multiplicatorSecondCol)
         {
             for (int i = 0; i < matrix.MatrixRows; i++)
@@ -417,6 +529,12 @@ namespace Matrix_Calculator
             return matrix;
         }
 
+        /// <summary>
+        /// Computes the rank of a matrix and reduces it to row echelon form using permutation matrices.
+        /// </summary>
+        /// <param name="matrix">The matrix to compute the rank of.</param>
+        /// <param name="matrixOut">The reduced row echelon form of the input matrix.</param>
+        /// <returns>The rank of the input matrix.</returns>
         public static int MatrixRow(Matrix matrix, out Matrix matrixOut)
         {
             int row = matrix.MatrixRows;

@@ -25,11 +25,13 @@ using System.Text.RegularExpressions;
 namespace Matrix_Calculator
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for the main window of the Matrix Calculator application.
     /// </summary>
-    /// 
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// The available operations for the calculator.
+        /// </summary>
         enum Operations
         {
             Addition,
@@ -37,14 +39,23 @@ namespace Matrix_Calculator
             Multiplication
         }
 
+        /// <summary>
+        /// The list of matrices currently loaded into the calculator.
+        /// </summary>
         public static ObservableCollection<Matrix> MatrixList = new ObservableCollection<Matrix>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
             PrepareBinding();
         }
 
+        /// <summary>
+        /// Prepares the data binding for the matrix list and its views.
+        /// </summary>
         private void PrepareBinding()
         {
             lvMatrix.ItemsSource = MatrixList;
@@ -58,6 +69,9 @@ namespace Matrix_Calculator
             view.Filter = UserFilter;
         }
 
+        /// <summary>
+        /// Adds a new matrix to the list based on the input values.
+        /// </summary>
         private void btnAddMatrix_Click(object sender, RoutedEventArgs e)
         {
             int count = 0;
@@ -78,6 +92,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Displays the selected matrix in the grid view.
+        /// </summary>
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var item = sender as ListViewItem;
@@ -100,6 +117,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Handles the button click event to save changes made to a matrix.
+        /// </summary>
         private void btnSaveChanges_Click(object sender, RoutedEventArgs e)
         {
             var index = lvMatrix.SelectedIndex;
@@ -113,6 +133,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Handles the button click event to delete a matrix from the matrix list.
+        /// </summary>
         private void btnDeleteMatrix_Click(object sender, RoutedEventArgs e)
         {
             var index = lvMatrix.SelectedIndex;
@@ -124,6 +147,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Handles the key down event to delete a matrix from the matrix list when the delete key is pressed.
+        /// </summary>
         private void lvMatrix_KeyDown(object sender, KeyEventArgs e)
         {
             var index = lvMatrix.SelectedIndex;
@@ -134,6 +160,11 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Filters the matrix list based on user input.
+        /// </summary>
+        /// <param name="item">The matrix item to be filtered.</param>
+        /// <returns>True if the matrix name contains the user input string, false otherwise.</returns>
         private bool UserFilter(object item)
         {
             if (String.IsNullOrEmpty(txtFilter.Text))
@@ -151,34 +182,52 @@ namespace Matrix_Calculator
 
         }
 
+        /// <summary>
+        /// Handles the text changed event to filter the matrix list based on user input.
+        /// </summary>
         private void txtFilter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             CollectionViewSource.GetDefaultView(lvMatrix.ItemsSource).Refresh();
         }
 
+        /// <summary>
+        /// Handles the click event of the Save Matrixes button. Saves the MatrixList to a file using the FileSupport class.
+        /// </summary>
         private void btnSaveMatrixes_Click(object sender, RoutedEventArgs e)
         {
             FileSupport.SaveMatrixesToFile(MatrixList);
         }
 
+        /// <summary>
+        /// Handles the click event of the Load Matrixes button. Loads MatrixList from a file using the FileSupport class and sets the text of the tbName TextBox to "Matrix [MatrixList.Count]".
+        /// </summary>
         private void btnLoadMatrixes_Click(object sender, RoutedEventArgs e)
         {
             FileSupport.LoadMatrixesFromFile(MatrixList);
             tbName.Text = $"Matrix {MatrixList.Count}";
         }
 
+        /// <summary>
+        /// Handles the PreviewTextInput event of the tbRows TextBox. Prevents non-numeric characters from being entered in the tbRows TextBox.
+        /// </summary>
         private void tbRows_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             var textBox = sender as TextBox;
             e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
         }
 
+        /// <summary>
+        /// Handles the PreviewTextInput event of the tbCols TextBox. Prevents non-numeric characters from being entered in the tbCols TextBox.
+        /// </summary>
         private void tbCols_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             var textBox = sender as TextBox;
             e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
         }
 
+        /// <summary>
+        /// Handles the SelectionChanged event of the cbMatrixA ComboBox. Converts the selected Matrix object to a DataTable object and sets the DataContext of the gridMatrixA DataGrid to a DataView object based on the DataTable object.
+        /// </summary>
         private void cbMatrixA_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var matrix = cbMatrixA.SelectedItem as Matrix;
@@ -194,6 +243,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Handles the SelectionChanged event of the cbMatrixB ComboBox. Converts the selected Matrix object to a DataTable object and sets the DataContext of the gridMatrixB DataGrid to a DataView object based on the DataTable object.
+        /// </summary>
         private void cbMatrixB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var matrix = cbMatrixB.SelectedItem as Matrix;
@@ -209,6 +261,10 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Calculates the result of the operation between the two selected matrices and sets the result to gridMatrixC
+        /// </summary>
+        /// <param name="operation">The operation to be performed: Addition, Subtraction or Multiplication</param>
         private void CalculateMatricesAndSetResult(Operations operation)
         {
             var matrixA = cbMatrixA.SelectedItem as Matrix;
@@ -241,6 +297,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Handles the click event for the Calculate button and performs the operation selected by the user
+        /// </summary>
         private void btnCalculate_Click(object sender, RoutedEventArgs e)
         {
             if ((bool)rbPlus.IsChecked)
@@ -257,6 +316,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Handles the selection changed event for the matrix selection ComboBox cbMatrixAA and displays the selected matrix in gridMatrixAA
+        /// </summary>
         private void cbMatrixAA_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;
@@ -272,6 +334,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Handles the click event for the Transpose button and displays the transposed matrix in gridMatrixD
+        /// </summary>
         private void btnTranspose_Click(object sender, RoutedEventArgs e)
         {
             var matrixAA = cbMatrixAA.SelectedItem as Matrix;
@@ -292,6 +357,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Inverts the selected matrix, sets its name to the value entered in the name textbox, and displays it in the datagrid.
+        /// </summary>
         private void btnInvert_Click(object sender, RoutedEventArgs e)
         {
             var matrixAA = cbMatrixAA.SelectedItem as Matrix;
@@ -313,6 +381,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Calculates the algebraic complements of the selected matrix, sets its name to the value entered in the name textbox, and displays it in the datagrid.
+        /// </summary>
         private void btnAlgebraicComplements_Click(object sender, RoutedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;
@@ -333,6 +404,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Calculates the transpose of the algebraic complements of the selected matrix, sets its name to the value entered in the name textbox, and displays it in the datagrid.
+        /// </summary>
         private void btnAttached_Click(object sender, RoutedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;
@@ -353,6 +427,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Handles the button click event for row switching operation
+        /// </summary>
         private void btnRowSwitch_Click(object sender, RoutedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;
@@ -380,6 +457,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Handles the button click event for column switching operation
+        /// </summary>
         private void btnColSwitch_Click(object sender, RoutedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;
@@ -407,6 +487,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Handles the button click event for matrix multiplication by number operation
+        /// </summary>
         private void btnMultiByNum_Click(object sender, RoutedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;
@@ -433,6 +516,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Calculates the determinant of the selected matrix and displays it in the corresponding textbox.
+        /// </summary>
         private void btnCalcDeterminant_Click(object sender, RoutedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;
@@ -441,24 +527,36 @@ namespace Matrix_Calculator
             tbDeterminant.Text = determinant.ToString();
         }
 
+        /// <summary>
+        /// Handles the PreviewTextInput event for the first row textbox of a matrix, allowing only numeric input.
+        /// </summary>
         private void tbFirstRowAdd_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             var textBox = sender as TextBox;
             e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
         }
 
+        /// <summary>
+        /// Handles the PreviewTextInput event for the second row textbox of a matrix, allowing only numeric input.
+        /// </summary>
         private void tbSecondRowAdd_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             var textBox = sender as TextBox;
             e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
         }
 
+        /// <summary>
+        /// Handles the PreviewTextInput event for the textbox used for adding a row to a matrix, allowing only numeric and minus sign input.
+        /// </summary>
         private void tbNumberRowAdd_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             var textBox = sender as TextBox;
             e.Handled = Regex.IsMatch(e.Text, @"[^-0-9]+$");
         }
 
+        /// <summary>
+        /// Event handler for the "Add Row" button. Adds two rows in a matrix with a given multiplication factor and updates the UI.
+        /// </summary>
         private void btnRowAdd_Click(object sender, RoutedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;
@@ -487,24 +585,36 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Event handler for the preview text input of the first column textbox. Allows only digits to be entered.
+        /// </summary>
         private void tbFirstColAdd_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             var textBox = sender as TextBox;
             e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
         }
 
+        /// <summary>
+        /// Event handler for the preview text input of the second column textbox. Allows only digits to be entered.
+        /// </summary>
         private void tbSecondColAdd_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             var textBox = sender as TextBox;
             e.Handled = Regex.IsMatch(e.Text, "[^0-9]+");
         }
 
+        /// <summary>
+        /// Handles the PreviewTextInput event of the tbNumberColAdd control.
+        /// </summary>
         private void tbNumberColAdd_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             var textBox = sender as TextBox;
             e.Handled = Regex.IsMatch(e.Text, @"[^-0-9]+$");
         }
 
+        /// <summary>
+        /// Handles the Click event of the btnColAdd control.
+        /// </summary>
         private void btnColAdd_Click(object sender, RoutedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;
@@ -533,6 +643,9 @@ namespace Matrix_Calculator
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the btnCalcMatrixRow control.
+        /// </summary>
         private void btnCalcMatrixRow_Click(object sender, RoutedEventArgs e)
         {
             var matrix = cbMatrixAA.SelectedItem as Matrix;
